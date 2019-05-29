@@ -1,4 +1,6 @@
-import { LitElement, property, query } from 'lit-element'
+import {
+    css, LitElement, property, query,
+} from 'lit-element'
 import { html } from 'lit-html'
 import { ifDefined } from 'lit-html/directives/if-defined'
 import { hasAnythingToRender } from './contract-helpers'
@@ -63,10 +65,7 @@ export default class LitForm extends LitElement {
     }
 
     protected __formTemplate(c: FormContract) {
-        return html`<style>
-                    ${this.__stylesheet()}
-                </style>
-
+        return html`
             <form action="${ifDefined(c.target)}"
                  method="${ifDefined(c.method)}" 
                  @submit="${onSubmit.bind(this)}">
@@ -77,9 +76,8 @@ export default class LitForm extends LitElement {
             </form>`
     }
 
-    // eslint-disable-next-line class-methods-use-this
-    protected __stylesheet() { // TODO: use base lit-element for this
-        return `:host {
+    public static styles() {
+        return css`:host {
                         display: block;
                     }
                 
