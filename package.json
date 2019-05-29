@@ -5,7 +5,7 @@
     "test": "test"
   },
   "files": [
-    "lib/*.js",
+    "lib/**/*.js",
     "*.js.map",
     "*.d.ts",
     "index.js",
