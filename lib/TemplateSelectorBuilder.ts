@@ -1,8 +1,9 @@
 import TemplateSelectorBuilder from '@lit-any/core/template-registry/TemplateSelectorBuilder'
 import FieldTemplateSelector from './TemplateSelector'
-import TemplateRegistry, { ComponentSet } from './TemplateRegistry'
+import TemplateRegistry from './TemplateRegistry'
 import { Criteria, RenderFunc } from './index'
 import { FieldContract } from './formContract'
+import { ComponentSet } from './components'
 
 type ComponentMap = {
     [ name in keyof ComponentSet ]: (opts: any) => RenderFunc;
