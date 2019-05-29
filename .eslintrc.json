@@ -8,6 +8,7 @@
   "rules": {
     "indent": "off",
     "import/no-unresolved": "warn",
+    "import/named": "off",
     "space-before-function-paren": [
       "error",
       {
