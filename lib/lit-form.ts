@@ -76,7 +76,7 @@ export default class LitForm extends LitElement {
             </form>`
     }
 
-    public static styles() {
+    public static get styles() {
         return css`:host {
                         display: block;
                     }
