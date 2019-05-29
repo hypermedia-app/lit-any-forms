@@ -113,7 +113,7 @@ export default class LitForm extends LitElement {
             <div class="fieldset">
                 ${this.__fieldsetHeading(c)}
                 
-                ${c.fields.map(f => this.__fieldWrapperTemplate(f))}
+                ${(c.fields || []).map(f => this.__fieldWrapperTemplate(f))}
             </div>`
     }
 
