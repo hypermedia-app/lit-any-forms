@@ -1,7 +1,7 @@
 import { LitElement, property, query } from 'lit-element'
 import { html } from 'lit-html'
 import { ifDefined } from 'lit-html/directives/if-defined'
-import contract from './contract-helpers'
+import { hasAnythingToRender } from './contract-helpers'
 import FieldTemplates from '.'
 import { FormContract, FieldContract } from './formContract'
 
@@ -56,21 +56,21 @@ export default class LitForm extends LitElement {
 
     public render() {
         if (this.contract) {
-            return this.__formTemplate()
+            return this.__formTemplate(this.contract)
         }
 
         return html``
     }
 
-    protected __formTemplate() {
+    protected __formTemplate(c: FormContract) {
         return html`<style>
                     ${this.__stylesheet()}
                 </style>
 
-            <form action="${ifDefined(this.contract.target)}"
-                 method="${ifDefined(this.contract.method)}" 
+            <form action="${ifDefined(c.target)}"
+                 method="${ifDefined(c.method)}" 
                  @submit="${onSubmit.bind(this)}">
-                ${contract.hasAnythingToRender(this.contract) ? this.__fieldsetTemplate() : ''}
+                ${hasAnythingToRender(c) ? this.__fieldsetTemplate(c) : ''}
                 
                 ${this.noSubmitButton ? '' : this.__submitButtonTemplate()}
                 ${this.noResetButton ? '' : this.__resetButtonTemplate()}
@@ -110,17 +110,12 @@ export default class LitForm extends LitElement {
         })
     }
 
-    protected __fieldsetTemplate() {
-        let fieldsArray: FieldContract[] = []
-        if (contract.fieldsAreIterable(this.contract)) {
-            fieldsArray = this.contract.fields
-        }
-
+    protected __fieldsetTemplate(c: FormContract) {
         return html`
             <div class="fieldset">
-                ${this.__fieldsetHeading(this.contract)}
+                ${this.__fieldsetHeading(c)}
                 
-                ${fieldsArray.map(f => this.__fieldWrapperTemplate(f))}
+                ${c.fields.map(f => this.__fieldWrapperTemplate(f))}
             </div>`
     }
 

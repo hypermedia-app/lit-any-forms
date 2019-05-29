@@ -8,11 +8,6 @@ function fieldsAreIterable(contract: FormContract) {
     return typeof contract.fields[Symbol.iterator] === 'function'
 }
 
-function hasAnythingToRender(contract: FormContract) {
+export function hasAnythingToRender(contract: FormContract) {
     return !!contract.title || fieldsAreIterable(contract)
-}
-
-export default {
-    hasAnythingToRender,
-    fieldsAreIterable,
 }
