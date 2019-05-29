@@ -17,6 +17,7 @@ module.exports = (config) => {
             // you can overwrite/extend the config further
             coverageIstanbulReporter: {
                 reports: ['json'],
+                thresholds: null,
             },
         }),
     )

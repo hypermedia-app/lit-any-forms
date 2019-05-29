@@ -13,7 +13,8 @@
     "test:prune-snapshots": "karma start --prune-snapshots",
     "test:legacy": "karma start --legacy --coverage",
     "test:legacy:watch": "karma start --legacy --auto-watch=true --single-run=false",
-    "test:bs": "karma start karma.bs.config.js --legacy --coverage"
+    "test:bs": "karma start karma.bs.config.js --legacy --coverage",
+    "remap-istanbul": "cat ./coverage/coverage-final.json | remap-istanbul -o ./coverage/lcov.info -t lcovonly"
   },
   "devDependencies": {
     "@open-wc/eslint-config": "^0.4.5",
@@ -32,7 +33,8 @@
     "@types/mocha": "^5.2.6",
     "@types/sinon": "^7.0.12",
     "lit-element": "^2.0.0",
-    "lit-html": "^1.1.0"
+    "lit-html": "^1.1.0",
+    "remap-istanbul": "^0.13.0"
   },
   "dependencies": {
     "@lit-any/core": "git+https://github.com/hypermedia-app/lit-any-core.git"
