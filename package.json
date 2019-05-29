@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "tsc",
     "pretest": "npm run lint",
-    "lint": "eslint --ext .ts .",
+    "lint": "eslint --ext .ts,.js . --quiet",
     "test": "karma start --coverage",
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "test:update-snapshots": "karma start --update-snapshots",

@@ -3,7 +3,7 @@ import { TemplateResult } from 'lit-html'
 import * as fallbackComponents from './FallbackComponents'
 import TemplateSelectorBuilder from './TemplateSelectorBuilder'
 import { Criteria, RenderFunc } from './index'
-import { IFieldContract } from './contract'
+import { FieldContract } from './formContract'
 
 export interface ButtonOptions {
     label: string;
@@ -16,7 +16,7 @@ export interface DropdownItem {
 }
 export type DropdownItems = DropdownItem[] | Promise<DropdownItem[]>
 export interface DropdownOptions {
-    items: DropdownItems | ((field: IFieldContract) => DropdownItems);
+    items: DropdownItems | ((field: FieldContract) => DropdownItems);
 }
 
 export interface TextboxOptions {
@@ -24,13 +24,14 @@ export interface TextboxOptions {
 }
 
 export interface ComponentSet {
-    textbox?: (opts: TextboxOptions) => RenderFunc;
-    dropdown?: (opts: DropdownOptions) => RenderFunc;
+    textbox: (opts: TextboxOptions) => RenderFunc;
+    dropdown: (opts: DropdownOptions) => RenderFunc;
 }
 interface ButtonComponent {
-    button?: (opts: ButtonOptions) => TemplateResult;
+    button: (opts: ButtonOptions) => TemplateResult;
 }
 
+// eslint-disable-next-line max-len
 export default class FormTemplateRegistry extends TemplateRegistry<TemplateSelectorBuilder, Criteria, RenderFunc> {
     public components: ComponentSet & ButtonComponent
 
@@ -40,7 +41,10 @@ export default class FormTemplateRegistry extends TemplateRegistry<TemplateSelec
     }
 
     public useComponents(components: ComponentSet) {
-        this.components = components || fallbackComponents
+        this.components = {
+            ...fallbackComponents,
+            ...components,
+        }
         return this
     }
 

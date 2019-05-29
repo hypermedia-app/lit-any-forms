@@ -1,9 +1,9 @@
 import { TemplateResult } from 'lit-html'
 import createRegistry from './factory'
-import { IFieldContract } from './contract'
+import { FieldContract } from './formContract'
 
 export interface Criteria {
-    field: IFieldContract;
+    field: FieldContract;
 }
 
 export default {
@@ -12,4 +12,4 @@ export default {
 }
 
 type Setter = (value: unknown) => void
-export type RenderFunc = (f: IFieldContract, id: string, v: unknown, set: Setter) => TemplateResult
+export type RenderFunc = (f: FieldContract, id: string, v: unknown, set: Setter) => TemplateResult

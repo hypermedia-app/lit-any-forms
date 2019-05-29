@@ -1,47 +1,45 @@
-import { LitElement } from 'lit-element'
+import { LitElement, property, query } from 'lit-element'
 import { html } from 'lit-html'
 import { ifDefined } from 'lit-html/directives/if-defined'
 import contract from './contract-helpers'
 import FieldTemplates from '.'
+import { FormContract, FieldContract } from './formContract'
 
-function onSubmit(e) {
+function onSubmit(this: LitForm, e: Event) {
     this.submit()
     e.preventDefault()
     return false
 }
 
 export default class LitForm extends LitElement {
-    constructor() {
-        super()
+    @property({ type: Object, attribute: false })
+    public contract: FormContract | null = null
 
-        this.contract = null
-        this.noLabels = false
-        this.value = {}
-        this.submitButtonLabel = 'Submit'
-        this.noSubmitButton = false
-        this.resetButtonLabel = 'Reset'
-        this.noResetButton = false
-        this.templateRegistry = ''
-    }
+    @property({ type: Boolean, attribute: 'no-labels', reflect: true })
+    public noLabels = false
 
-    get form() {
-        return this.shadowRoot.querySelector('form')
-    }
+    @property({ type: Object, attribute: false })
+    public value: { [key: string]: any } = {}
 
-    static get properties() {
-        return {
-            contract: { type: Object, attribute: false },
-            noLabels: { type: Boolean, attribute: 'no-labels', reflect: true },
-            value: { type: Object, attribute: false },
-            submitButtonLabel: { type: String, attribute: 'submit-button-label' },
-            noSubmitButton: { type: Boolean, attribute: 'no-submit-button', reflect: true },
-            resetButtonLabel: { type: String, attribute: 'reset-button-label' },
-            noResetButton: { type: Boolean, attribute: 'no-reset-button', reflect: true },
-            templateRegistry: { type: String, attribute: 'template-registry' },
-        }
-    }
+    @property({ type: String, attribute: 'submit-button-label' })
+    public submitButtonLabel = 'Submit'
 
-    submit() {
+    @property({ type: Boolean, attribute: 'no-submit-button', reflect: true })
+    public noSubmitButton = false
+
+    @property({ type: String, attribute: 'reset-button-label' })
+    public resetButtonLabel = 'Reset'
+
+    @property({ type: Boolean, attribute: 'no-reset-button', reflect: true })
+    public noResetButton = false
+
+    @property({ type: String, attribute: 'template-registry' })
+    public templateRegistry = ''
+
+    // @ts-ignore
+    @query('form') public form: HTMLFormElement
+
+    public submit() {
         this.dispatchEvent(new CustomEvent('submit', {
             detail: {
                 value: this.value,
@@ -51,12 +49,12 @@ export default class LitForm extends LitElement {
         }))
     }
 
-    async reset() {
+    public async reset() {
         this.value = {}
         await this.requestUpdate()
     }
 
-    render() {
+    public render() {
         if (this.contract) {
             return this.__formTemplate()
         }
@@ -64,7 +62,7 @@ export default class LitForm extends LitElement {
         return html``
     }
 
-    __formTemplate() {
+    protected __formTemplate() {
         return html`<style>
                     ${this.__stylesheet()}
                 </style>
@@ -80,7 +78,7 @@ export default class LitForm extends LitElement {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    __stylesheet() {
+    protected __stylesheet() { // TODO: use base lit-element for this
         return `:host {
                         display: block;
                     }
@@ -98,22 +96,22 @@ export default class LitForm extends LitElement {
                     }`
     }
 
-    __submitButtonTemplate() {
+    protected __submitButtonTemplate() {
         return FieldTemplates.byName(this.templateRegistry).components.button({
             label: this.submitButtonLabel,
             onClick: this.submit.bind(this),
         })
     }
 
-    __resetButtonTemplate() {
+    protected __resetButtonTemplate() {
         return FieldTemplates.byName(this.templateRegistry).components.button({
             label: this.resetButtonLabel,
             onClick: this.reset.bind(this),
         })
     }
 
-    __fieldsetTemplate() {
-        let fieldsArray = []
+    protected __fieldsetTemplate() {
+        let fieldsArray: FieldContract[] = []
         if (contract.fieldsAreIterable(this.contract)) {
             fieldsArray = this.contract.fields
         }
@@ -126,7 +124,7 @@ export default class LitForm extends LitElement {
             </div>`
     }
 
-    __fieldWrapperTemplate(field) {
+    protected __fieldWrapperTemplate(field: FieldContract) {
         const fieldId = field.property
 
         let fieldLabel = html``
@@ -140,22 +138,24 @@ export default class LitForm extends LitElement {
                     </div>`
     }
 
-    __fieldTemplate(field, fieldId) {
+    protected __fieldTemplate(field: FieldContract, fieldId: string) {
         const setter = this.__createModelValueSetter(field)
 
         const fieldTemplate = FieldTemplates.byName(this.templateRegistry).getTemplate({ field })
         const fieldValue = this.__getPropertyValue(field, this.value)
 
         if (fieldTemplate === null) {
-            const renderFunc = FieldTemplates.byName(this.templateRegistry).components.textbox()
+            const renderFunc = FieldTemplates.byName(this.templateRegistry).components.textbox({
+                type: 'single line',
+            })
             return renderFunc(field, fieldId, fieldValue, setter)
         }
 
         return html`${fieldTemplate.render(field, fieldId, fieldValue, setter)}`
     }
 
-    __createModelValueSetter(field) {
-        return (fieldInput) => {
+    protected __createModelValueSetter(field: FieldContract) {
+        return (fieldInput: any) => {
             let newValue = fieldInput
 
             if (field.valueDecorator && typeof field.valueDecorator.wrap === 'function') {
@@ -167,7 +167,7 @@ export default class LitForm extends LitElement {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    __getPropertyValue(field, model) {
+    protected __getPropertyValue(field: FieldContract, model: any) {
         let value = model[field.property] || null
 
         if (value && field.valueDecorator && typeof field.valueDecorator.unwrap === 'function') {
@@ -178,7 +178,7 @@ export default class LitForm extends LitElement {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    __fieldsetHeading(currentContract) {
+    protected __fieldsetHeading(currentContract: FormContract) {
         if (!currentContract.title) {
             return html``
         }

@@ -2,7 +2,7 @@ import TemplateSelectorBuilder from '@lit-any/core/template-registry/TemplateSel
 import FieldTemplateSelector from './TemplateSelector'
 import TemplateRegistry, { ComponentSet } from './TemplateRegistry'
 import { Criteria, RenderFunc } from './index'
-import { IFieldContract } from './contract'
+import { FieldContract } from './formContract'
 
 type ComponentMap = {
     [ name in keyof ComponentSet ]: (opts: any) => RenderFunc;
@@ -20,7 +20,7 @@ export default class FieldTemplateSelectorBuilder extends TemplateSelectorBuilde
         this._components = registry.components
     }
 
-    public fieldMatches(fieldMatchFunc: (field: IFieldContract) => boolean) {
+    public fieldMatches(fieldMatchFunc: (field: FieldContract) => boolean) {
         this._selector.push(constraint => fieldMatchFunc(constraint.field))
 
         return this
