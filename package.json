@@ -1,6 +1,6 @@
 {
   "name": "@lit-any/forms",
-  "version": "0.9.0",
+  "version": "0.9.0-a1",
   "directories": {
     "test": "test"
   },
@@ -50,7 +50,7 @@
     "remap-istanbul": "^0.13.0"
   },
   "dependencies": {
-    "@lit-any/core": "git+https://github.com/hypermedia-app/lit-any-core.git"
+    "@lit-any/core": "^0.9.0-a1"
   },
   "peerDependencies": {
     "lit-element": ">= 2",
