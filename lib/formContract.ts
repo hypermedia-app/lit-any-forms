@@ -13,7 +13,7 @@ interface ValueDecorator {
 
 export interface FieldContract {
     property: string;
-    range: string;
+    type: string;
     required: boolean;
     title: string;
     description: string;
