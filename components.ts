@@ -1,13 +1,13 @@
 import { ComponentSet, DropdownOptions, TextboxOptions } from './lib/components'
 
-export function textbox<T extends TextboxOptions>(options: T) {
+export function textbox(options: TextboxOptions = { type: 'single line' }) {
     return {
         name: 'textbox' as keyof ComponentSet,
         options,
     }
 }
 
-export function dropdown<T extends DropdownOptions>(options: T) {
+export function dropdown(options: DropdownOptions) {
     return {
         name: 'dropdown' as keyof ComponentSet,
         options,

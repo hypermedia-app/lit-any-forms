@@ -33,6 +33,10 @@ export default class FieldTemplateSelectorBuilder extends TemplateSelectorBuilde
     }
 
     public rendersComponent(component: { name: keyof ComponentSet; options: unknown}) {
+        if (!component.options) {
+            throw new Error(`Missing settings for component ${component.name}`)
+        }
+
         return this.renders((...args) => {
             const components = this._getComponents()
 
