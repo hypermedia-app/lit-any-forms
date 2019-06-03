@@ -9,7 +9,8 @@
     "*.js.map",
     "*.d.ts",
     "index.js",
-    "components.js"
+    "components.js",
+    "lit-form.js"
   ],
   "scripts": {
     "prepare": "tsc",
