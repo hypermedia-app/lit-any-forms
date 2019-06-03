@@ -11,14 +11,14 @@ type ComponentMap = {
 
 // eslint-disable-next-line max-len
 export default class FieldTemplateSelectorBuilder extends TemplateSelectorBuilder<Criteria, RenderFunc> {
-    private _components: ComponentMap
+    private _getComponents: () => ComponentMap
 
     // eslint-disable-next-line no-useless-constructor
     public constructor(
         registry: TemplateRegistry
     ) {
         super(registry)
-        this._components = registry.components
+        this._getComponents = () => registry.components
     }
 
     public fieldMatches(fieldMatchFunc: (field: FieldContract) => boolean) {
@@ -34,12 +34,14 @@ export default class FieldTemplateSelectorBuilder extends TemplateSelectorBuilde
 
     public rendersComponent(component: { name: keyof ComponentSet; options: unknown}) {
         return this.renders((...args) => {
-            if (!this._components) {
+            const components = this._getComponents()
+
+            if (!components) {
                 throw new Error('No component set configured')
             }
 
-            const componentFunc = this._components[component.name] ||
-                this._components.textbox
+            const componentFunc = components[component.name] ||
+                components.textbox
 
             if (!componentFunc) {
                 throw new Error('No suitable component found')

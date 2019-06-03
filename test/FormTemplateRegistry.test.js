@@ -38,5 +38,32 @@ describe('FormTemplateRegistry', () => {
             // then
             expect(div).dom.to.equalSnapshot()
         })
+
+        it('allows component set to be changed when templates are set first', () => {
+            // given
+            registry.when
+                .fieldMatches(() => true)
+                .rendersComponent(textbox({
+                    type: 'single line',
+                }))
+            registry.useComponents({
+                textbox: () => () => html`orig tb`,
+            })
+            registry.useComponents({
+                textbox: () => () => html`changed tb`,
+            })
+            const div = document.createElement('div')
+
+            // when
+            const template = registry.getTemplate({
+                field: {
+                    property: 'prop',
+                },
+            })
+            render(template.render(), div)
+
+            // then
+            expect(div).dom.to.equalSnapshot()
+        })
     })
 })
