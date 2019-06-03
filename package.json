@@ -4,6 +4,11 @@
   "directories": {
     "test": "test"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hypermedia-app/lit-any-forms"
+  },
+  "homepage": "https://lit-any.hypermedia.app/",
   "files": [
     "lib/**/*.js",
     "*.js.map",
