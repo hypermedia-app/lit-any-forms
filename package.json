@@ -10,7 +10,7 @@
   },
   "homepage": "https://lit-any.hypermedia.app/",
   "files": [
-    "lib/**/*.js",
+    "lib",
     "*.js.map",
     "*.d.ts",
     "index.js",
