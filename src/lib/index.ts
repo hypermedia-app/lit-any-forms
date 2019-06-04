@@ -1,13 +1,14 @@
 import { TemplateResult } from 'lit-html'
 import createRegistry from './factory'
 import { FieldContract } from './formContract'
+import FormTemplateRegistry from './TemplateRegistry'
 
 export interface Criteria {
     field: FieldContract;
 }
 
 export default {
-    default: createRegistry(),
+    default: createRegistry() as FormTemplateRegistry,
     byName: createRegistry,
 }
 
