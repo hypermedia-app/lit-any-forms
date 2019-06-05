@@ -1,9 +1,10 @@
 {
   "name": "@lit-any/forms",
-  "version": "0.9.0-a3",
+  "version": "0.9.0",
   "directories": {
     "test": "test"
   },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/hypermedia-app/lit-any-forms"
@@ -50,7 +51,7 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "@lit-any/core": "^0.9.0-a1"
+    "@lit-any/core": "^0.9.0"
   },
   "peerDependencies": {
     "lit-element": ">= 2",

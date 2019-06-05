@@ -5,7 +5,7 @@ Construct HTML forms from lightweight snippets for each field using `lit-html`
 ## Installation
 
 ``` bash
-yarn add @lit-any/forms
+yarn add @lit-any/forms lit-html lit-element
 ```
 
 ## Form setup
