@@ -436,7 +436,7 @@ describe('lit-form', () => {
                     { property: 'name' },
                 ],
             }
-            litForm.fieldsetStyles = css`border: solid 1px red;`
+            litForm.fieldsetStyles = css`border-top-style: solid; border-top-width: 1px; border-top-color: red;`
 
             // when
             await litForm.updateComplete
@@ -444,8 +444,8 @@ describe('lit-form', () => {
             // then
             const fieldsetStyle = getComputedStyle(litForm.form.querySelector('.fieldset'))
             expect(fieldsetStyle.borderTopStyle).to.be.equal('solid')
-            expect(fieldsetStyle.borderBottomColor).to.be.equal('rgb(255, 0, 0)')
-            expect(fieldsetStyle.borderLeftWidth).to.be.equal('1px')
+            expect(fieldsetStyle.borderTopColor).to.be.equal('rgb(255, 0, 0)')
+            expect(fieldsetStyle.borderTopWidth).to.be.equal('1px')
         })
 
         it('applies style to field', async () => {
@@ -455,7 +455,7 @@ describe('lit-form', () => {
                     { property: 'name' },
                 ],
             }
-            litForm.fieldStyles = css`border: solid 1px red;`
+            litForm.fieldStyles = css`border-top-style: solid; border-top-width: 1px; border-top-color: red;`
 
             // when
             await litForm.updateComplete
@@ -463,8 +463,8 @@ describe('lit-form', () => {
             // then
             const fieldStyle = getComputedStyle(litForm.form.querySelector('.field'))
             expect(fieldStyle.borderTopStyle).to.be.equal('solid')
-            expect(fieldStyle.borderBottomColor).to.be.equal('rgb(255, 0, 0)')
-            expect(fieldStyle.borderLeftWidth).to.be.equal('1px')
+            expect(fieldStyle.borderTopColor).to.be.equal('rgb(255, 0, 0)')
+            expect(fieldStyle.borderTopWidth).to.be.equal('1px')
         })
 
         it('applies style to form', async () => {
@@ -474,7 +474,7 @@ describe('lit-form', () => {
                     { property: 'name' },
                 ],
             }
-            litForm.formStyles = css`border: solid 1px red;`
+            litForm.formStyles = css`border-top-style: solid; border-top-width: 1px; border-top-color: red;`
 
             // when
             await litForm.updateComplete
@@ -482,8 +482,8 @@ describe('lit-form', () => {
             // then
             const formStyle = getComputedStyle(litForm.form)
             expect(formStyle.borderTopStyle).to.be.equal('solid')
-            expect(formStyle.borderBottomColor).to.be.equal('rgb(255, 0, 0)')
-            expect(formStyle.borderLeftWidth).to.be.equal('1px')
+            expect(formStyle.borderTopColor).to.be.equal('rgb(255, 0, 0)')
+            expect(formStyle.borderTopWidth).to.be.equal('1px')
         })
 
         it('throws when form style is not CSSResult', (done) => {
