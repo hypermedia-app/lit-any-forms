@@ -1,5 +1,5 @@
 import {
-    css, LitElement, property, query,
+    css, CSSResult, LitElement, property, query,
 } from 'lit-element'
 import { html } from 'lit-html'
 import { ifDefined } from 'lit-html/directives/if-defined'
@@ -38,6 +38,15 @@ export default class LitForm extends LitElement {
     @property({ type: String, attribute: 'template-registry' })
     public templateRegistry = ''
 
+    @property({ type: String })
+    public formStyles: CSSResult | null = null
+
+    @property({ type: String })
+    public fieldsetStyles: CSSResult | null = null
+
+    @property({ type: String })
+    public fieldStyles: CSSResult | null = null
+
     // @ts-ignore
     @query('form') public form: HTMLFormElement
 
@@ -65,7 +74,23 @@ export default class LitForm extends LitElement {
     }
 
     protected __formTemplate(c: FormContract) {
+        this.__assertStyles()
+
         return html`
+            <style>
+                form {
+                    ${this.formStyles}
+                }
+                
+                .fieldset {
+                    ${this.fieldsetStyles}
+                }
+                
+                .field {
+                    ${this.fieldStyles}
+                }
+            </style>
+
             <form action="${ifDefined(c.target)}"
                  method="${ifDefined(c.method)}" 
                  @submit="${onSubmit.bind(this)}">
@@ -79,18 +104,6 @@ export default class LitForm extends LitElement {
     public static get styles() {
         return css`:host {
                         display: block;
-                    }
-                
-                    form {
-                        @apply --lit-form-form;
-                    }
-                    
-                    .fieldset {
-                        @apply --lit-form-fieldset;
-                    }
-                    
-                    .field {
-                        @apply --lit-form-field;
                     }`
     }
 
@@ -177,6 +190,20 @@ export default class LitForm extends LitElement {
         }
 
         return html`<legend>${currentContract.title}</legend>`
+    }
+
+    private __assertStyles() {
+        if (this.fieldStyles && !(this.fieldStyles instanceof CSSResult)) {
+            throw new Error('Value of fieldStyles must be a CSSResult')
+        }
+
+        if (this.fieldsetStyles && !(this.fieldsetStyles instanceof CSSResult)) {
+            throw new Error('Value of fieldStyles must be a CSSResult')
+        }
+
+        if (this.formStyles && !(this.formStyles instanceof CSSResult)) {
+            throw new Error('Value of formStyles must be a CSSResult')
+        }
     }
 }
 
