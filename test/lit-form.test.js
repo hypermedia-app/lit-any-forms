@@ -443,9 +443,9 @@ describe('lit-form', () => {
 
             // then
             const fieldsetStyle = getComputedStyle(litForm.form.querySelector('.fieldset'))
-            expect(fieldsetStyle.borderStyle).to.be.equal('solid')
-            expect(fieldsetStyle.borderColor).to.be.equal('rgb(255, 0, 0)')
-            expect(fieldsetStyle.borderWidth).to.be.equal('1px')
+            expect(fieldsetStyle.borderTopStyle).to.be.equal('solid')
+            expect(fieldsetStyle.borderBottomColor).to.be.equal('rgb(255, 0, 0)')
+            expect(fieldsetStyle.borderLeftWidth).to.be.equal('1px')
         })
 
         it('applies style to field', async () => {
@@ -462,9 +462,9 @@ describe('lit-form', () => {
 
             // then
             const fieldStyle = getComputedStyle(litForm.form.querySelector('.field'))
-            expect(fieldStyle.borderStyle).to.be.equal('solid')
-            expect(fieldStyle.borderColor).to.be.equal('rgb(255, 0, 0)')
-            expect(fieldStyle.borderWidth).to.be.equal('1px')
+            expect(fieldStyle.borderTopStyle).to.be.equal('solid')
+            expect(fieldStyle.borderBottomColor).to.be.equal('rgb(255, 0, 0)')
+            expect(fieldStyle.borderLeftWidth).to.be.equal('1px')
         })
 
         it('applies style to form', async () => {
@@ -481,9 +481,9 @@ describe('lit-form', () => {
 
             // then
             const formStyle = getComputedStyle(litForm.form)
-            expect(formStyle.borderStyle).to.be.equal('solid')
-            expect(formStyle.borderColor).to.be.equal('rgb(255, 0, 0)')
-            expect(formStyle.borderWidth).to.be.equal('1px')
+            expect(formStyle.borderTopStyle).to.be.equal('solid')
+            expect(formStyle.borderBottomColor).to.be.equal('rgb(255, 0, 0)')
+            expect(formStyle.borderLeftWidth).to.be.equal('1px')
         })
 
         it('throws when form style is not CSSResult', (done) => {
