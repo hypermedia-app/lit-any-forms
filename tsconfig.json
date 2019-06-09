@@ -9,7 +9,6 @@
     ],
     "strict": true,
     "declaration": true,
-    "sourceMap": true,
     "noImplicitAny": true,
     "moduleResolution": "node",
     "outDir": "."

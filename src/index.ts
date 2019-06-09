@@ -1,4 +1,4 @@
-import LitForm from './lib/lit-form'
+import LitForm from './lit-form'
 import FieldTemplates from './lib'
 
 export {

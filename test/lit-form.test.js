@@ -3,6 +3,7 @@ import { expect, fixture } from '@open-wc/testing'
 import { html } from 'lit-html'
 import * as sinon from 'sinon'
 import { FieldTemplates } from '..'
+import { css } from 'lit-element'
 import { forSubmit } from './async-tests'
 
 describe('lit-form', () => {
@@ -418,6 +419,122 @@ describe('lit-form', () => {
             // then
             expect(litForm.value).to.deep.equal({})
             expect(litForm.form.querySelector('input').value).to.equal('')
+        })
+    })
+
+    describe('styled', () => {
+        beforeEach(async () => {
+            litForm = await fixture(`<lit-form></lit-form>`)
+            getTemplate = sinon.stub()
+            getTemplate.returns(null)
+        })
+
+        it('applies style to fieldset', async () => {
+            // given
+            litForm.contract = {
+                fields: [
+                    { property: 'name' },
+                ],
+            }
+            litForm.fieldsetStyles = css`border-top-style: solid; border-top-width: 1px; border-top-color: red;`
+
+            // when
+            await litForm.updateComplete
+
+            // then
+            const fieldsetStyle = getComputedStyle(litForm.form.querySelector('.fieldset'))
+            expect(fieldsetStyle.borderTopStyle).to.be.equal('solid')
+            expect(fieldsetStyle.borderTopColor).to.be.equal('rgb(255, 0, 0)')
+            expect(fieldsetStyle.borderTopWidth).to.be.equal('1px')
+        })
+
+        it('applies style to field', async () => {
+            // given
+            litForm.contract = {
+                fields: [
+                    { property: 'name' },
+                ],
+            }
+            litForm.fieldStyles = css`border-top-style: solid; border-top-width: 1px; border-top-color: red;`
+
+            // when
+            await litForm.updateComplete
+
+            // then
+            const fieldStyle = getComputedStyle(litForm.form.querySelector('.field'))
+            expect(fieldStyle.borderTopStyle).to.be.equal('solid')
+            expect(fieldStyle.borderTopColor).to.be.equal('rgb(255, 0, 0)')
+            expect(fieldStyle.borderTopWidth).to.be.equal('1px')
+        })
+
+        it('applies style to form', async () => {
+            // given
+            litForm.contract = {
+                fields: [
+                    { property: 'name' },
+                ],
+            }
+            litForm.formStyles = css`border-top-style: solid; border-top-width: 1px; border-top-color: red;`
+
+            // when
+            await litForm.updateComplete
+
+            // then
+            const formStyle = getComputedStyle(litForm.form)
+            expect(formStyle.borderTopStyle).to.be.equal('solid')
+            expect(formStyle.borderTopColor).to.be.equal('rgb(255, 0, 0)')
+            expect(formStyle.borderTopWidth).to.be.equal('1px')
+        })
+
+        it('throws when form style is not CSSResult', (done) => {
+            (async () => {
+                // given
+                litForm.contract = {
+                    fields: [
+                        { property: 'name' },
+                    ],
+                }
+                litForm.formStyles = `border: solid 1px red;`
+
+                // when
+                await litForm.updateComplete
+            })()
+                .then(() => done('Should have thrown'))
+                .catch(() => done())
+        })
+
+        it('throws when fieldset style is not CSSResult', (done) => {
+            (async () => {
+                // given
+                litForm.contract = {
+                    fields: [
+                        { property: 'name' },
+                    ],
+                }
+                litForm.fieldsetStyles = `border: solid 1px red;`
+
+                // when
+                await litForm.updateComplete
+            })()
+                .then(() => done('Should have thrown'))
+                .catch(() => done())
+        })
+
+        it('throws when field style is not CSSResult', (done) => {
+            (async () => {
+                // given
+                litForm.contract = {
+                    fields: [
+                        { property: 'name' },
+                    ],
+                }
+                litForm.fieldStyles = `border: solid 1px red;`
+
+                // when
+                await litForm.updateComplete
+            })()
+                .then(() => done('Should have thrown'))
+                .catch(() => done())
         })
     })
 })
