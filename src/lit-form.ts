@@ -177,6 +177,8 @@ export default class LitForm extends LitElement {
       }
 
       this.value[field.property] = newValue
+
+      this.requestUpdate()
     }
   }
 
