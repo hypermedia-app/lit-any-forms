@@ -93,6 +93,7 @@ fabric.properties
 *.js
 *.js.map
 *.d.ts
-!karma*.js
+!*.config.js
+!*.conf.js
 !test/*.js
 /lib/

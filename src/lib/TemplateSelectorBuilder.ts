@@ -6,52 +6,52 @@ import { FieldContract } from './formContract'
 import { ComponentSet } from './components'
 
 type ComponentMap = {
-    [ name in keyof ComponentSet ]: (opts: any) => RenderFunc;
+  [name in keyof ComponentSet]: (opts: any) => RenderFunc
 }
 
 // eslint-disable-next-line max-len
-export default class FieldTemplateSelectorBuilder extends TemplateSelectorBuilder<Criteria, RenderFunc> {
-    private _getComponents: () => ComponentMap
+export default class FieldTemplateSelectorBuilder extends TemplateSelectorBuilder<
+  Criteria,
+  RenderFunc
+> {
+  private _getComponents: () => ComponentMap
 
-    // eslint-disable-next-line no-useless-constructor
-    public constructor(
-        registry: TemplateRegistry
-    ) {
-        super(registry)
-        this._getComponents = () => registry.components
+  // eslint-disable-next-line no-useless-constructor
+  public constructor(registry: TemplateRegistry) {
+    super(registry)
+    this._getComponents = () => registry.components
+  }
+
+  public fieldMatches(fieldMatchFunc: (field: FieldContract) => boolean) {
+    this._selector.push(constraint => fieldMatchFunc(constraint.field))
+
+    return this
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  protected _createSelector() {
+    return new FieldTemplateSelector()
+  }
+
+  public rendersComponent(component: { name: keyof ComponentSet; options: unknown }) {
+    if (!component.options) {
+      throw new Error(`Missing settings for component ${component.name}`)
     }
 
-    public fieldMatches(fieldMatchFunc: (field: FieldContract) => boolean) {
-        this._selector.push(constraint => fieldMatchFunc(constraint.field))
+    return this.renders((...args) => {
+      const components = this._getComponents()
 
-        return this
-    }
+      if (!components) {
+        throw new Error('No component set configured')
+      }
 
-    // eslint-disable-next-line class-methods-use-this
-    protected _createSelector() {
-        return new FieldTemplateSelector()
-    }
+      const componentFunc = components[component.name] || components.textbox
 
-    public rendersComponent(component: { name: keyof ComponentSet; options: unknown}) {
-        if (!component.options) {
-            throw new Error(`Missing settings for component ${component.name}`)
-        }
+      if (!componentFunc) {
+        throw new Error('No suitable component found')
+      }
 
-        return this.renders((...args) => {
-            const components = this._getComponents()
-
-            if (!components) {
-                throw new Error('No component set configured')
-            }
-
-            const componentFunc = components[component.name] ||
-                components.textbox
-
-            if (!componentFunc) {
-                throw new Error('No suitable component found')
-            }
-
-            return componentFunc(component.options)(...args)
-        })
-    }
+      return componentFunc(component.options)(...args)
+    })
+  }
 }

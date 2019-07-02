@@ -21,7 +21,12 @@
   "scripts": {
     "prepare": "tsc",
     "pretest": "npm run lint",
-    "lint": "eslint --ext .ts,.js . --quiet",
+    "lint:eslint": "eslint --ext .js,.html,.ts . --quiet",
+    "format:eslint": "eslint --ext .js,.html,.ts . --quiet --fix",
+    "lint:prettier": "prettier \"**/*.{js,ts}\" --list-different || (echo '↑↑ these files are not prettier formatted ↑↑' && exit 1)",
+    "format:prettier": "prettier \"**/*.{js,ts}\" --write",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "format": "npm run format:eslint && npm run format:prettier",
     "test": "karma start --coverage",
     "test:watch": "karma start --auto-watch=true --single-run=false",
     "test:update-snapshots": "karma start --update-snapshots",
@@ -29,7 +34,8 @@
     "test:legacy": "karma start --legacy --coverage",
     "test:legacy:watch": "karma start --legacy --auto-watch=true --single-run=false",
     "test:bs": "karma start karma.bs.config.js --legacy --coverage",
-    "remap-istanbul": "cat ./coverage/coverage-final.json | remap-istanbul -o ./coverage/lcov.info -t lcovonly"
+    "remap-istanbul": "cat ./coverage/coverage-final.json | remap-istanbul -o ./coverage/lcov.info -t lcovonly",
+    "release": "standard-version"
   },
   "devDependencies": {
     "@open-wc/eslint-config": "^0.4.5",
@@ -48,7 +54,14 @@
     "remap-istanbul": "^0.13.0",
     "sinon": "^7.2.2",
     "standard": "^12.0.1",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.0",
+    "standard-version": "^6.0.1",
+    "husky": "^1.0.0",
+    "lint-staged": "^8.0.0",
+    "cz-conventional-changelog": "^2.1.0",
+    "@open-wc/prettier-config": "^0.1.0"
   },
   "dependencies": {
     "@lit-any/core": "^0.9.0"
@@ -56,5 +69,17 @@
   "peerDependencies": {
     "lit-element": ">= 2",
     "lit-html": ">= 1"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

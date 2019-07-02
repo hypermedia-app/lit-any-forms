@@ -4,12 +4,12 @@ import { FieldContract } from './formContract'
 import FormTemplateRegistry from './TemplateRegistry'
 
 export interface Criteria {
-    field: FieldContract;
+  field: FieldContract
 }
 
 export default {
-    default: createRegistry() as FormTemplateRegistry,
-    byName: createRegistry,
+  default: createRegistry() as FormTemplateRegistry,
+  byName: createRegistry,
 }
 
 type Setter = (value: unknown) => void

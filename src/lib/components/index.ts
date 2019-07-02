@@ -9,9 +9,9 @@ export { DropdownOptions } from './dropdown'
 export { ButtonOptions } from './button'
 
 export interface ComponentSet {
-    textbox: (opts: TextboxOptions) => RenderFunc;
-    dropdown: (opts: DropdownOptions) => RenderFunc;
+  textbox: (opts: TextboxOptions) => RenderFunc
+  dropdown: (opts: DropdownOptions) => RenderFunc
 }
 export interface ButtonComponent {
-    button: (opts: ButtonOptions) => TemplateResult;
+  button: (opts: ButtonOptions) => TemplateResult
 }

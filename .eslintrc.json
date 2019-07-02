@@ -1,6 +1,7 @@
 {
   "extends": [
     "@open-wc/eslint-config",
+    "eslint-config-prettier",
     "plugin:@typescript-eslint/recommended",
     "standard"
   ],
@@ -19,7 +20,16 @@
       "error",
       "always-multiline"
     ],
-    "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/indent": ["warn", 2],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "none"
+        }
+      }
+    ]
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
