@@ -1,3 +1,16 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.9.2](https://github.com/hypermedia-app/lit-any-forms/compare/v0.9.1...v0.9.2) (2019-07-03)
+
+
+### Bug Fixes
+
+* ensure field elements are updated when form values change ([c78e6c4](https://github.com/hypermedia-app/lit-any-forms/commit/c78e6c4)), closes [#16](https://github.com/hypermedia-app/lit-any-forms/issues/16)
+
+
+
 ## [0.9.1](https://github.com/hypermedia-app/lit-any-forms/compare/v0.9.0...v0.9.1) (2019-06-09)
 
 
@@ -23,6 +36,3 @@
 * add default settings for text box ([220d6d8](https://github.com/hypermedia-app/lit-any-forms/commit/220d6d8))
 * components must not captured in closure ([fc63f89](https://github.com/hypermedia-app/lit-any-forms/commit/fc63f89))
 * rename range to type in contract ([ac77d40](https://github.com/hypermedia-app/lit-any-forms/commit/ac77d40))
-
-
-
