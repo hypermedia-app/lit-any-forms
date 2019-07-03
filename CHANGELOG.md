@@ -13,14 +13,12 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [0.9.1](https://github.com/hypermedia-app/lit-any-forms/compare/v0.9.0...v0.9.1) (2019-06-09)
 
+### Bug Fixes
+
+* Form styling fixed ([#8](https://github.com/hypermedia-app/lit-any-forms/pull/8)]
 
 
 # [0.9.0](https://github.com/hypermedia-app/lit-any-forms/compare/v0.9.0-a3...v0.9.0) (2019-06-05)
-
-
-
-# [0.9.0-a3](https://github.com/hypermedia-app/lit-any-forms/compare/v0.9.0-a2...v0.9.0-a3) (2019-06-05)
-
 
 ### Bug Fixes
 
