@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.9.4](https://github.com/hypermedia-app/lit-any-forms/compare/v0.9.3...v0.9.4) (2019-07-11)
+
+
+### Bug Fixes
+
+* form should re-render only when value set is different ([fdb9799](https://github.com/hypermedia-app/lit-any-forms/commit/fdb9799)), closes [#19](https://github.com/hypermedia-app/lit-any-forms/issues/19)
+
+
+
 ### [0.9.3](https://github.com/hypermedia-app/lit-any-forms/compare/v0.9.2...v0.9.3) (2019-07-03)
 
 * remove duplicate files from build output
