@@ -176,9 +176,11 @@ export default class LitForm extends LitElement {
         newValue = field.valueDecorator.wrap(newValue)
       }
 
-      this.value[field.property] = newValue
+      if (this.value[field.property] !== newValue) {
+        this.value[field.property] = newValue
 
-      this.requestUpdate()
+        this.requestUpdate()
+      }
     }
   }
 
