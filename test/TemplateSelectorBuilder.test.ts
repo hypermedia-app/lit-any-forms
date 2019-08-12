@@ -1,12 +1,13 @@
+// @ts-ignore
 import { expect } from '@open-wc/testing'
 import * as sinon from 'sinon'
-import FieldTemplateSelectorBuilder from '../lib/TemplateSelectorBuilder'
+import FieldTemplateSelectorBuilder from '../src/lib/TemplateSelectorBuilder'
 
 describe('FieldTemplateSelectorBuilder', () => {
-  let builder
+  let builder: FieldTemplateSelectorBuilder
 
   beforeEach(() => {
-    builder = new FieldTemplateSelectorBuilder({})
+    builder = new FieldTemplateSelectorBuilder({} as any)
   })
 
   describe('adding field matcher function', () => {
@@ -19,6 +20,7 @@ describe('FieldTemplateSelectorBuilder', () => {
       builder.fieldMatches(matchFunc)
 
       // then
+      // @ts-ignore
       const matcher = builder._selector._matchers[0]
       expect(matcher({ field })).to.be.true
       expect(matchFunc.firstCall.args[0]).to.be.equal(field)

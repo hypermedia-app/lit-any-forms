@@ -1,8 +1,9 @@
+// @ts-ignore
 import { expect } from '@open-wc/testing'
-import TemplateSelector from '../lib/TemplateSelector'
+import TemplateSelector from '../src/lib/TemplateSelector'
 
 describe('FieldTemplateSelector', () => {
-  let selector
+  let selector: TemplateSelector
 
   beforeEach(() => {
     selector = new TemplateSelector()
@@ -22,7 +23,7 @@ describe('FieldTemplateSelector', () => {
 
     it('returns false if field is undefined', () => {
       // given
-      const criteria = { }
+      const criteria = {}
 
       // when
       const shouldMatch = selector.shouldMatch(criteria)
@@ -36,6 +37,7 @@ describe('FieldTemplateSelector', () => {
       const criteria = { field: { property: null } }
 
       // when
+      // @ts-ignore
       const shouldMatch = selector.shouldMatch(criteria)
 
       // then
@@ -47,6 +49,7 @@ describe('FieldTemplateSelector', () => {
       const criteria = { field: {} }
 
       // when
+      // @ts-ignore
       const shouldMatch = selector.shouldMatch(criteria)
 
       // then
@@ -68,7 +71,7 @@ describe('FieldTemplateSelector', () => {
 
     it('should not match when field is undefined', () => {
       // given
-      const criteria = { }
+      const criteria = {}
 
       // when
       const matches = selector.matches(criteria)
