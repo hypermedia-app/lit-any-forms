@@ -405,6 +405,33 @@ describe('lit-form', () => {
     })
   })
 
+  describe('when no-legend is set', () => {
+    beforeEach(async () => {
+      getTemplate = sinon.stub()
+      getTemplate.returns(template)
+      template.render = sinon.spy()
+    })
+
+    it('should not render the <legend> element', async () => {
+      // given
+      const contract = {
+        title: 'should not appear',
+        fields: [{ property: 'field_one' }],
+      }
+      const litForm = await fixture(
+        html`
+          <lit-form no-legend .contract="${contract}"></lit-form>
+        `,
+      )
+
+      // when
+      await litForm.updateComplete
+
+      // then
+      expect(litForm.form.querySelector('legend')).to.be.null
+    })
+  })
+
   describe('when no-submit-button is set', () => {
     beforeEach(async () => {
       getTemplate = sinon.stub()

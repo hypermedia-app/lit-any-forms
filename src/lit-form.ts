@@ -27,6 +27,9 @@ export default class LitForm extends LitElement {
   @property({ type: Boolean, attribute: 'no-submit-button', reflect: true })
   public noSubmitButton = false
 
+  @property({ type: Boolean, attribute: 'no-legend', reflect: true })
+  public noLegend = false
+
   @property({ type: String, attribute: 'reset-button-label' })
   public resetButtonLabel = 'Reset'
 
@@ -202,9 +205,8 @@ export default class LitForm extends LitElement {
     return value
   }
 
-  // eslint-disable-next-line class-methods-use-this
   protected __fieldsetHeading(currentContract: FormContract) {
-    if (!currentContract.title) {
+    if (!currentContract.title || this.noLegend) {
       return html``
     }
 
