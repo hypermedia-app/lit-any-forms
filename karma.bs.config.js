@@ -12,5 +12,7 @@ module.exports = config => {
     }),
   )
 
+  config.concurrency = 1
+
   return config
 }
