@@ -19,7 +19,7 @@ export default class LitForm extends LitElement {
   public noLabels = false
 
   @property({ type: Object, attribute: false })
-  public value: { [key: string]: any } = {}
+  public value: { [key: string]: unknown } = {}
 
   @property({ type: String, attribute: 'submit-button-label' })
   public submitButtonLabel = 'Submit'
@@ -36,6 +36,12 @@ export default class LitForm extends LitElement {
   @property({ type: Boolean, attribute: 'no-reset-button', reflect: true })
   public noResetButton = false
 
+  @property({ type: String, attribute: 'clear-button-label' })
+  public clearButtonLabel = 'Clear'
+
+  @property({ type: Boolean, attribute: 'no-clear-button', reflect: true })
+  public noClearButton = false
+
   @property({ type: String, attribute: 'template-registry' })
   public templateRegistry = ''
 
@@ -47,6 +53,8 @@ export default class LitForm extends LitElement {
 
   @property({ type: String })
   public fieldStyles: CSSResult | null = null
+
+  private __initialValue: { [key: string]: unknown } = {}
 
   @query('form')
   public form: HTMLFormElement | undefined
@@ -66,6 +74,11 @@ export default class LitForm extends LitElement {
   }
 
   public async reset() {
+    this.value = this.__initialValue
+    await this.requestUpdate()
+  }
+
+  public async clear() {
     this.value = {}
     await this.requestUpdate()
   }
@@ -76,6 +89,10 @@ export default class LitForm extends LitElement {
     }
 
     return html``
+  }
+
+  protected firstUpdated(): void {
+    this.__initialValue = this.value
   }
 
   protected __formTemplate(c: FormContract) {
@@ -102,8 +119,15 @@ export default class LitForm extends LitElement {
         @submit="${onSubmit.bind(this)}"
       >
         ${hasAnythingToRender(c) ? this.__fieldsetTemplate(c) : ''}
-        ${this.noSubmitButton ? '' : this.__submitButtonTemplate()}
-        ${this.noResetButton ? '' : this.__resetButtonTemplate()}
+        ${this.noSubmitButton
+          ? ''
+          : this.__buttonTemplate(this.submitButtonLabel, this.submit.bind(this))}
+        ${this.noResetButton
+          ? ''
+          : this.__buttonTemplate(this.resetButtonLabel, this.reset.bind(this))}
+        ${this.noClearButton
+          ? ''
+          : this.__buttonTemplate(this.clearButtonLabel, this.clear.bind(this))}
       </form>
     `
   }
@@ -116,17 +140,10 @@ export default class LitForm extends LitElement {
     `
   }
 
-  protected __submitButtonTemplate() {
+  protected __buttonTemplate(label: string, onClick: () => void) {
     return FieldTemplates.byName(this.templateRegistry).components.button({
-      label: this.submitButtonLabel,
-      onClick: this.submit.bind(this),
-    })
-  }
-
-  protected __resetButtonTemplate() {
-    return FieldTemplates.byName(this.templateRegistry).components.button({
-      label: this.resetButtonLabel,
-      onClick: this.reset.bind(this),
+      label,
+      onClick,
     })
   }
 

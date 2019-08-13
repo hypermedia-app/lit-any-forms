@@ -437,14 +437,14 @@ describe('lit-form', () => {
     })
   })
 
-  describe('when no-submit-button is set', () => {
+  describe('buttons', () => {
     beforeEach(async () => {
       getTemplate = sinon.stub()
       getTemplate.returns(template)
       template.render = sinon.spy()
     })
 
-    it('should not render a submit button', async () => {
+    it('should not render a submit button when disabled', async () => {
       // given
       const contract = {
         fields: [{ property: 'field_one' }],
@@ -459,7 +459,84 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form!.querySelector('button')).to.be.null
+      expect(litForm).shadowDom.to.equalSnapshot()
+    })
+
+    it('should render default buttons', async () => {
+      // given
+      const contract = {
+        fields: [{ property: 'field_one' }],
+      }
+      const litForm = await fixture(
+        html`
+          <lit-form .contract="${contract}"></lit-form>
+        `,
+      )
+
+      // when
+      await litForm.updateComplete
+
+      // then
+      expect(litForm).shadowDom.to.equalSnapshot()
+    })
+
+    it('should allow changing button text', async () => {
+      // given
+      const contract = {
+        fields: [{ property: 'field_one' }],
+      }
+      const litForm = await fixture(
+        html`
+          <lit-form
+            submit-button-label="Wyślij"
+            reset-button-label="Przywróć"
+            clear-button-label="Wyczyść"
+            .contract="${contract}"
+          ></lit-form>
+        `,
+      )
+
+      // when
+      await litForm.updateComplete
+
+      // then
+      expect(litForm).shadowDom.to.equalSnapshot()
+    })
+
+    it('should not render a reset button when disabled', async () => {
+      // given
+      const contract = {
+        fields: [{ property: 'field_one' }],
+      }
+      const litForm = await fixture(
+        html`
+          <lit-form no-reset-button .contract="${contract}"></lit-form>
+        `,
+      )
+
+      // when
+      await litForm.updateComplete
+
+      // then
+      expect(litForm).shadowDom.to.equalSnapshot()
+    })
+
+    it('should not render a clear button when disabled', async () => {
+      // given
+      const contract = {
+        fields: [{ property: 'field_one' }],
+      }
+      const litForm = await fixture(
+        html`
+          <lit-form no-clear-button .contract="${contract}"></lit-form>
+        `,
+      )
+
+      // when
+      await litForm.updateComplete
+
+      // then
+      expect(litForm).shadowDom.to.equalSnapshot()
     })
   })
 
@@ -568,11 +645,39 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // when
-      await litForm.reset()
+      await litForm.clear()
 
       // then
       expect(litForm.value).to.deep.equal({})
       expect(litForm.form!.querySelector('input')!.value).to.equal('')
+    })
+  })
+
+  describe('clicking reset button', () => {
+    beforeEach(async () => {
+      getTemplate = sinon.stub()
+      getTemplate.returns(null)
+    })
+
+    it('reverts the initially set value', async () => {
+      // given
+      const contract = {
+        fields: [{ property: 'name' }],
+      }
+      const value = { name: 'a' }
+      const litForm = await fixture(
+        html`
+          <lit-form .contract="${contract}" .value="${value}"></lit-form>
+        `,
+      )
+      await litForm.updateComplete
+      litForm.value = { name: 'b' }
+
+      // when
+      await litForm.reset()
+
+      // then
+      expect(litForm.value).to.deep.equal({ name: 'a' })
     })
   })
 })
