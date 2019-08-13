@@ -180,7 +180,7 @@ export default class LitForm extends LitElement {
     const setter = this.__createModelValueSetter(field)
 
     const fieldTemplate = FieldTemplates.byName(this.templateRegistry).getTemplate({ field })
-    const fieldValue = this.__getPropertyValue(field, this.value)
+    const fieldValue = this.__getPropertyValue(field)
 
     if (fieldTemplate === null) {
       const fallbackComponent = FieldTemplates.byName(this.templateRegistry).components.textbox
@@ -201,7 +201,7 @@ export default class LitForm extends LitElement {
   }
 
   protected __createModelValueSetter(field: FieldContract) {
-    return (fieldInput: any) => {
+    return (fieldInput: unknown) => {
       let newValue = fieldInput
 
       if (field.valueDecorator && typeof field.valueDecorator.wrap === 'function') {
@@ -216,9 +216,8 @@ export default class LitForm extends LitElement {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  protected __getPropertyValue(field: FieldContract, model: Model) {
-    let value = model[field.property] || null
+  protected __getPropertyValue(field: FieldContract) {
+    let value = this.value[field.property] || null
 
     if (value && field.valueDecorator && typeof field.valueDecorator.unwrap === 'function') {
       value = field.valueDecorator.unwrap(value)
