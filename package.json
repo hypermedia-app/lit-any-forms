@@ -19,7 +19,7 @@
     "lit-form.js"
   ],
   "scripts": {
-    "prepack": "tsc",
+    "prepare": "tsc",
     "lint:eslint": "eslint --ext .js,.html,.ts . --quiet",
     "format:eslint": "eslint --ext .js,.html,.ts . --quiet --fix",
     "lint:prettier": "prettier \"**/*.{js,ts}\" --list-different || (echo '↑↑ these files are not prettier formatted ↑↑' && exit 1)",
