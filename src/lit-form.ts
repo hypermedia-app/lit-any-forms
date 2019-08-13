@@ -96,7 +96,11 @@ export default class LitForm extends LitElement {
   }
 
   protected firstUpdated(): void {
-    this.__initialValue = this.value
+    try {
+      this.__initialValue = JSON.parse(JSON.stringify(this.value))
+    } catch (e) {
+      console.warn('Failed to serialize form value')
+    }
   }
 
   protected __formTemplate(c: FormContract) {
