@@ -5,6 +5,10 @@ import { hasAnythingToRender } from './lib/contract-helpers'
 import FieldTemplates from './lib'
 import { FormContract, FieldContract } from './lib/formContract'
 
+interface Model {
+  [key: string]: unknown
+}
+
 function onSubmit(this: LitForm, e: Event) {
   this.submit()
   e.preventDefault()
@@ -19,7 +23,7 @@ export default class LitForm extends LitElement {
   public noLabels = false
 
   @property({ type: Object, attribute: false })
-  public value: { [key: string]: unknown } = {}
+  public value: Model = {}
 
   @property({ type: String, attribute: 'submit-button-label' })
   public submitButtonLabel = 'Submit'
@@ -54,7 +58,7 @@ export default class LitForm extends LitElement {
   @property({ type: String })
   public fieldStyles: CSSResult | null = null
 
-  private __initialValue: { [key: string]: unknown } = {}
+  private __initialValue: Model = {}
 
   @query('form')
   public form: HTMLFormElement | undefined
@@ -213,7 +217,7 @@ export default class LitForm extends LitElement {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  protected __getPropertyValue(field: FieldContract, model: any) {
+  protected __getPropertyValue(field: FieldContract, model: Model) {
     let value = model[field.property] || null
 
     if (value && field.valueDecorator && typeof field.valueDecorator.unwrap === 'function') {
