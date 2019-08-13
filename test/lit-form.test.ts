@@ -2,7 +2,6 @@
 import { expect, fixture as realFixture } from '@open-wc/testing'
 import { html, TemplateResult } from 'lit-html'
 import * as sinon from 'sinon'
-import { css } from 'lit-element'
 import { FieldTemplates } from '../src'
 import { forSubmit } from './async-tests'
 import LitForm from '../src/lit-form'
@@ -18,11 +17,17 @@ describe('lit-form', () => {
   } = {}
 
   const { byName } = FieldTemplates
-  FieldTemplates.byName = name => {
-    const registry = byName(name)
-    registry.getTemplate = getTemplate
-    return registry
-  }
+  before(() => {
+    FieldTemplates.byName = name => {
+      const registry = byName(name)
+      registry.getTemplate = getTemplate
+      return registry
+    }
+  })
+
+  after(() => {
+    FieldTemplates.byName = byName
+  })
 
   describe('by default', () => {
     beforeEach(async () => {
@@ -43,7 +48,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.querySelector('fieldset')).to.be.null
+      expect(litForm.form!.querySelector('fieldset')).to.be.null
     })
 
     it('should render legend for contract title', async () => {
@@ -61,7 +66,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.querySelector('legend')!.textContent).to.equal('My first form')
+      expect(litForm.form!.querySelector('legend')!.textContent).to.equal('My first form')
     })
 
     it('should render wrapper for every field', async () => {
@@ -79,7 +84,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.querySelectorAll('.field').length).to.equal(4)
+      expect(litForm.form!.querySelectorAll('.field').length).to.equal(4)
     })
 
     it('should render every field', async () => {
@@ -115,7 +120,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.querySelector('label')!.getAttribute('for')).to.be.equal('field_one')
+      expect(litForm.form!.querySelector('label')!.getAttribute('for')).to.be.equal('field_one')
     })
 
     it("should set label's text to title", async () => {
@@ -133,7 +138,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.querySelector('label')!.textContent).to.be.equal('some important input')
+      expect(litForm.form!.querySelector('label')!.textContent).to.be.equal('some important input')
     })
 
     it("should set label's text to property name is title is not given", async () => {
@@ -151,7 +156,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.querySelector('label')!.textContent).to.be.equal('field_one')
+      expect(litForm.form!.querySelector('label')!.textContent).to.be.equal('field_one')
     })
 
     it('should pass field id to render call', async () => {
@@ -244,7 +249,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // when
-      const element: HTMLInputElement = litForm.form.querySelector('input')!
+      const element: HTMLInputElement = litForm.form!.querySelector('input')!
       element.value = 'abc'
       const e = new Event('input', {
         bubbles: true,
@@ -271,7 +276,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.querySelector('legend')).to.be.null
+      expect(litForm.form!.querySelector('legend')).to.be.null
     })
 
     it("should set form[action] to contract's target", async () => {
@@ -289,7 +294,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.getAttribute('action')).to.equal('http://exmple.com/resource')
+      expect(litForm.form!.getAttribute('action')).to.equal('http://exmple.com/resource')
     })
 
     it("should set form[method] to contract's method", async () => {
@@ -307,7 +312,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.getAttribute('method')).to.equal('POST')
+      expect(litForm.form!.getAttribute('method')).to.equal('POST')
     })
 
     it('should pass field to FieldTemplates.getTemplate', async () => {
@@ -347,7 +352,7 @@ describe('lit-form', () => {
         await litForm.updateComplete
 
         // then
-        expect(litForm.form.querySelector('.field input')).to.be.not.undefined
+        expect(litForm.form!.querySelector('.field input')).to.be.not.undefined
       })
 
       it('should set fallback input value', async () => {
@@ -373,7 +378,7 @@ describe('lit-form', () => {
         await litForm.updateComplete
 
         // then
-        const input = litForm.form.querySelector('.field input')! as HTMLInputElement
+        const input = litForm.form!.querySelector('.field input')! as HTMLInputElement
         expect(input.value).to.be.equal('qwerty')
       })
     })
@@ -401,7 +406,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.querySelector('label')).to.be.null
+      expect(litForm.form!.querySelector('label')).to.be.null
     })
   })
 
@@ -428,7 +433,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.querySelector('legend')).to.be.null
+      expect(litForm.form!.querySelector('legend')).to.be.null
     })
   })
 
@@ -454,7 +459,7 @@ describe('lit-form', () => {
       await litForm.updateComplete
 
       // then
-      expect(litForm.form.querySelector('button')).to.be.null
+      expect(litForm.form!.querySelector('button')).to.be.null
     })
   })
 
@@ -476,7 +481,7 @@ describe('lit-form', () => {
       )
       await litForm.updateComplete
       Array.prototype.forEach.call(
-        litForm.form.querySelectorAll('input'),
+        litForm.form!.querySelectorAll('input'),
         (input: HTMLInputElement) => {
           // eslint-disable-next-line no-param-reassign
           input.value = 'a'
@@ -567,152 +572,7 @@ describe('lit-form', () => {
 
       // then
       expect(litForm.value).to.deep.equal({})
-      expect(litForm.form.querySelector('input')!.value).to.equal('')
-    })
-  })
-
-  describe('styled', () => {
-    beforeEach(async () => {
-      getTemplate = sinon.stub()
-      getTemplate.returns(null)
-    })
-
-    it('applies style to fieldset', async () => {
-      // given
-      const contract = {
-        fields: [{ property: 'name' }],
-      }
-      const fieldsetStyles = css`
-        border-top-style: solid;
-        border-top-width: 1px;
-        border-top-color: red;
-      `
-      const litForm = await fixture(
-        html`
-          <lit-form .contract="${contract}" .fieldsetStyles="${fieldsetStyles}"></lit-form>
-        `,
-      )
-
-      // when
-      await litForm.updateComplete
-
-      // then
-      const fieldsetStyle = getComputedStyle(litForm.form.querySelector('.fieldset')!)
-      expect(fieldsetStyle.borderTopStyle).to.be.equal('solid')
-      expect(fieldsetStyle.borderTopColor).to.be.equal('rgb(255, 0, 0)')
-      expect(fieldsetStyle.borderTopWidth).to.be.equal('1px')
-    })
-
-    it('applies style to field', async () => {
-      // given
-      const contract = {
-        fields: [{ property: 'name' }],
-      }
-      const fieldStyles = css`
-        border-top-style: solid;
-        border-top-width: 1px;
-        border-top-color: red;
-      `
-      const litForm = await fixture(
-        html`
-          <lit-form .contract="${contract}" .fieldStyles="${fieldStyles}"></lit-form>
-        `,
-      )
-
-      // when
-      await litForm.updateComplete
-
-      // then
-      const fieldStyle = getComputedStyle(litForm.form.querySelector('.field')!)
-      expect(fieldStyle.borderTopStyle).to.be.equal('solid')
-      expect(fieldStyle.borderTopColor).to.be.equal('rgb(255, 0, 0)')
-      expect(fieldStyle.borderTopWidth).to.be.equal('1px')
-    })
-
-    it('applies style to form', async () => {
-      // given
-      const contract = {
-        fields: [{ property: 'name' }],
-      }
-      const formStyles = css`
-        border-top-style: solid;
-        border-top-width: 1px;
-        border-top-color: red;
-      `
-      const litForm = await fixture(
-        html`
-          <lit-form .contract="${contract}" .formStyles="${formStyles}"></lit-form>
-        `,
-      )
-
-      // when
-      await litForm.updateComplete
-
-      // then
-      const formStyle = getComputedStyle(litForm.form)
-      expect(formStyle.borderTopStyle).to.be.equal('solid')
-      expect(formStyle.borderTopColor).to.be.equal('rgb(255, 0, 0)')
-      expect(formStyle.borderTopWidth).to.be.equal('1px')
-    })
-
-    it('throws when form style is not CSSResult', done => {
-      ;(async () => {
-        // given
-        const contract = {
-          fields: [{ property: 'name' }],
-        }
-        const formStyles = 'border: solid 1px red;'
-        const litForm = await fixture(
-          html`
-            <lit-form .contract="${contract}" .formStyles="${formStyles}"></lit-form>
-          `,
-        )
-
-        // when
-        await litForm.updateComplete
-      })()
-        .then(() => done('Should have thrown'))
-        .catch(() => done())
-    })
-
-    it('throws when fieldset style is not CSSResult', done => {
-      ;(async () => {
-        // given
-        const contract = {
-          fields: [{ property: 'name' }],
-        }
-        const fieldsetStyles = 'border: solid 1px red;'
-        const litForm = await fixture(
-          html`
-            <lit-form .contract="${contract}" .fieldsetStyles="${fieldsetStyles}"></lit-form>
-          `,
-        )
-
-        // when
-        await litForm.updateComplete
-      })()
-        .then(() => done('Should have thrown'))
-        .catch(() => done())
-    })
-
-    it('throws when field style is not CSSResult', done => {
-      ;(async () => {
-        // given
-        const contract = {
-          fields: [{ property: 'name' }],
-        }
-        const fieldStyles = 'border: solid 1px red;'
-        const litForm = await fixture(
-          html`
-            <lit-form .contract="${contract}" .fieldStyles="${fieldStyles}"></lit-form>
-          `,
-        )
-
-        // when
-        await litForm.updateComplete
-      })()
-        .then(() => done('Should have thrown'))
-        .catch(() => done())
+      expect(litForm.form!.querySelector('input')!.value).to.equal('')
     })
   })
 })

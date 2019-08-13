@@ -1,4 +1,4 @@
-import { css, CSSResult, LitElement, property } from 'lit-element'
+import { css, CSSResult, LitElement, property, query } from 'lit-element'
 import { html } from 'lit-html'
 import { ifDefined } from 'lit-html/directives/if-defined'
 import { hasAnythingToRender } from './lib/contract-helpers'
@@ -48,20 +48,21 @@ export default class LitForm extends LitElement {
   @property({ type: String })
   public fieldStyles: CSSResult | null = null
 
-  public get form() {
-    return this.renderRoot.querySelector('form') as HTMLFormElement
-  }
+  @query('form')
+  public form: HTMLFormElement | undefined
 
   public submit() {
-    this.dispatchEvent(
-      new CustomEvent('submit', {
-        detail: {
-          value: this.value,
-          target: this.form.action,
-          method: this.form.getAttribute('method') || this.form.method.toUpperCase(),
-        },
-      }),
-    )
+    if (this.form) {
+      this.dispatchEvent(
+        new CustomEvent('submit', {
+          detail: {
+            value: this.value,
+            target: this.form.action,
+            method: this.form.getAttribute('method') || this.form.method.toUpperCase(),
+          },
+        }),
+      )
+    }
   }
 
   public async reset() {
