@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/hypermedia-app/lit-any-forms/compare/v0.9.4...v0.10.0) (2019-08-13)
+
+
+### Build System
+
+* tweak babel settings and style tests ([10d3fed](https://github.com/hypermedia-app/lit-any-forms/commit/10d3fed))
+* use prepare again because prepack is broken ([27b7f55](https://github.com/hypermedia-app/lit-any-forms/commit/27b7f55))
+
+
+### Features
+
+* added a clear button and reset button reverts original value ([f54160c](https://github.com/hypermedia-app/lit-any-forms/commit/f54160c))
+* option to disable legend header ([35ad09b](https://github.com/hypermedia-app/lit-any-forms/commit/35ad09b)), closes [#15](https://github.com/hypermedia-app/lit-any-forms/issues/15)
+
+
+
 ### [0.9.4](https://github.com/hypermedia-app/lit-any-forms/compare/v0.9.3...v0.9.4) (2019-07-11)
 
 
