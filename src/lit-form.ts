@@ -27,6 +27,9 @@ export default class LitForm extends LitElement {
   @property({ type: Boolean, attribute: 'no-submit-button', reflect: true })
   public noSubmitButton = false
 
+  @property({ type: Boolean, attribute: 'no-legend', reflect: true })
+  public noLegend = false
+
   @property({ type: String, attribute: 'reset-button-label' })
   public resetButtonLabel = 'Reset'
 
@@ -45,19 +48,21 @@ export default class LitForm extends LitElement {
   @property({ type: String })
   public fieldStyles: CSSResult | null = null
 
-  // @ts-ignore
-  @query('form') public form: HTMLFormElement
+  @query('form')
+  public form: HTMLFormElement | undefined
 
   public submit() {
-    this.dispatchEvent(
-      new CustomEvent('submit', {
-        detail: {
-          value: this.value,
-          target: this.form.action,
-          method: this.form.getAttribute('method') || this.form.method.toUpperCase(),
-        },
-      }),
-    )
+    if (this.form) {
+      this.dispatchEvent(
+        new CustomEvent('submit', {
+          detail: {
+            value: this.value,
+            target: this.form.action,
+            method: this.form.getAttribute('method') || this.form.method.toUpperCase(),
+          },
+        }),
+      )
+    }
   }
 
   public async reset() {
@@ -157,10 +162,16 @@ export default class LitForm extends LitElement {
     const fieldValue = this.__getPropertyValue(field, this.value)
 
     if (fieldTemplate === null) {
-      const renderFunc = FieldTemplates.byName(this.templateRegistry).components.textbox({
-        type: 'single line',
-      })
-      return renderFunc(field, fieldId, fieldValue, setter)
+      const fallbackComponent = FieldTemplates.byName(this.templateRegistry).components.textbox
+
+      if (fallbackComponent) {
+        const renderFunc = fallbackComponent({
+          type: 'single line',
+        })
+        return renderFunc(field, fieldId, fieldValue, setter)
+      }
+
+      return () => 'Component not found'
     }
 
     return html`
@@ -195,9 +206,8 @@ export default class LitForm extends LitElement {
     return value
   }
 
-  // eslint-disable-next-line class-methods-use-this
   protected __fieldsetHeading(currentContract: FormContract) {
-    if (!currentContract.title) {
+    if (!currentContract.title || this.noLegend) {
       return html``
     }
 

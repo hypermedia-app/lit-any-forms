@@ -1,11 +1,11 @@
 // @ts-ignore
 import { expect } from '@open-wc/testing'
 import { html, render } from 'lit-html'
-import FormTemplateRegistry from '../lib/TemplateRegistry'
-import { textbox } from '../components'
+import FormTemplateRegistry from '../src/lib/TemplateRegistry'
+import { textbox } from '../src/components'
 
 describe('FormTemplateRegistry', () => {
-  let registry
+  let registry: FormTemplateRegistry
 
   beforeEach(() => {
     registry = new FormTemplateRegistry('test')
@@ -15,16 +15,24 @@ describe('FormTemplateRegistry', () => {
     it('allows component set to be changed', () => {
       // given
       registry.useComponents({
-        textbox: () => () => html`orig tb`,
+        textbox: () => () =>
+          html`
+            orig tb
+          `,
       })
       registry.useComponents({
-        textbox: () => () => html`changed tb`,
+        textbox: () => () =>
+          html`
+            changed tb
+          `,
       })
       registry.when
         .fieldMatches(() => true)
-        .rendersComponent(textbox({
-          type: 'single line',
-        }))
+        .rendersComponent(
+          textbox({
+            type: 'single line',
+          }),
+        )
       const div = document.createElement('div')
 
       // when
@@ -32,8 +40,13 @@ describe('FormTemplateRegistry', () => {
         field: {
           property: 'prop',
         },
-      })
-      render(template.render(), div)
+      } as any)
+      render(
+        html`
+          ${template!.render()}
+        `,
+        div,
+      )
 
       // then
       expect(div).dom.to.equalSnapshot()
@@ -43,14 +56,22 @@ describe('FormTemplateRegistry', () => {
       // given
       registry.when
         .fieldMatches(() => true)
-        .rendersComponent(textbox({
-          type: 'single line',
-        }))
+        .rendersComponent(
+          textbox({
+            type: 'single line',
+          }),
+        )
       registry.useComponents({
-        textbox: () => () => html`orig tb`,
+        textbox: () => () =>
+          html`
+            orig tb
+          `,
       })
       registry.useComponents({
-        textbox: () => () => html`changed tb`,
+        textbox: () => () =>
+          html`
+            changed tb
+          `,
       })
       const div = document.createElement('div')
 
@@ -59,8 +80,13 @@ describe('FormTemplateRegistry', () => {
         field: {
           property: 'prop',
         },
-      })
-      render(template.render(), div)
+      } as any)
+      render(
+        html`
+          ${template!.render()}
+        `,
+        div,
+      )
 
       // then
       expect(div).dom.to.equalSnapshot()

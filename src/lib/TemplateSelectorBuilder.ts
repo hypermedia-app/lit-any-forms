@@ -23,7 +23,13 @@ export default class FieldTemplateSelectorBuilder extends TemplateSelectorBuilde
   }
 
   public fieldMatches(fieldMatchFunc: (field: FieldContract) => boolean) {
-    this._selector.push(constraint => fieldMatchFunc(constraint.field))
+    this._selector.push(constraint => {
+      if (!constraint.field) {
+        return false
+      }
+
+      return fieldMatchFunc(constraint.field)
+    })
 
     return this
   }

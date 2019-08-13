@@ -4,7 +4,7 @@ import { FieldContract } from './formContract'
 import FormTemplateRegistry from './TemplateRegistry'
 
 export interface Criteria {
-  field: FieldContract
+  field?: FieldContract | null
 }
 
 export default {

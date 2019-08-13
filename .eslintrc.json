@@ -10,6 +10,7 @@
     "indent": "off",
     "import/no-unresolved": "warn",
     "import/named": "off",
+    "import/extensions": "off",
     "space-before-function-paren": [
       "error",
       {
