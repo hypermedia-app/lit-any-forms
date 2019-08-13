@@ -335,6 +335,28 @@ describe('lit-form', () => {
       expect(getTemplateCall.args[0].field).to.equal(field)
     })
 
+    it('does not break when initial value has cycles', async () => {
+      // given
+      const bar = {
+        value: null as any,
+      }
+      const value = {
+        foo: bar,
+      }
+      bar.value = value
+      const litForm = await realFixture(
+        html`
+          <lit-form .contract="${{}}" .value="${value}"></lit-form>
+        `,
+      )
+
+      // when
+      await litForm.updateComplete
+
+      // then
+      expect(litForm.__initialValue).to.deep.equal({})
+    })
+
     describe('when template was not found', () => {
       it('should return a plain input', async () => {
         // given
