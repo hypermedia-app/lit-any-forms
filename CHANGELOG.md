@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.10.1](https://github.com/hypermedia-app/lit-any-forms/compare/v0.10.0...v0.10.1) (2019-08-15)
+
+
+### Bug Fixes
+
+* initial value must be a deep copy ([2a072ab](https://github.com/hypermedia-app/lit-any-forms/commit/2a072ab)), closes [#21](https://github.com/hypermedia-app/lit-any-forms/issues/21)
+
+
+
 ## [0.10.0](https://github.com/hypermedia-app/lit-any-forms/compare/v0.9.4...v0.10.0) (2019-08-13)
 
 
