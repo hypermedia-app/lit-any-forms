@@ -702,4 +702,24 @@ describe('lit-form', () => {
       expect(litForm.value).to.deep.equal({ name: 'a' })
     })
   })
+
+  describe('[no-shadow]', () => {
+    it('renders to Light DOM', async () => {
+      // given
+      const contract = {
+        title: 'My first form',
+      }
+      const litForm = await fixture(
+        html`
+          <lit-form .contract="${contract}" no-shadow></lit-form>
+        `,
+      )
+
+      // when
+      await litForm.updateComplete
+
+      // then
+      expect(litForm.shadowRoot).to.be.null
+    })
+  })
 })
