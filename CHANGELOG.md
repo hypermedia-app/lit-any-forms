@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.11.0](https://github.com/hypermedia-app/lit-any-forms/compare/v0.10.1...v0.11.0) (2019-11-05)
+
+
+### Build System
+
+* **deps:** [security] bump eslint-utils from 1.3.1 to 1.4.2 ([5be63b4](https://github.com/hypermedia-app/lit-any-forms/commit/5be63b4))
+* **deps:** [security] bump mixin-deep from 1.3.1 to 1.3.2 ([2ab3fc5](https://github.com/hypermedia-app/lit-any-forms/commit/2ab3fc5))
+* **deps:** fixes security vulnerability CVE-2019-10747 ([b2d03dc](https://github.com/hypermedia-app/lit-any-forms/commit/b2d03dc))
+
+
+### Features
+
+* attribute to disable shadow DOM ([3f72ec0](https://github.com/hypermedia-app/lit-any-forms/commit/3f72ec0))
+
+
+
 ### [0.10.1](https://github.com/hypermedia-app/lit-any-forms/compare/v0.10.0...v0.10.1) (2019-08-15)
 
 
