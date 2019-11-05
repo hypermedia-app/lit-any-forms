@@ -63,6 +63,14 @@ export default class LitForm extends LitElement {
   @query('form')
   public form: HTMLFormElement | undefined
 
+  protected createRenderRoot() {
+    if (this.hasAttribute('no-shadow')) {
+      return this
+    }
+
+    return super.createRenderRoot()
+  }
+
   public submit() {
     if (this.form) {
       this.dispatchEvent(
