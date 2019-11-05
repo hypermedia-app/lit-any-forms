@@ -62,7 +62,8 @@
     "sinon": "^7.2.2",
     "standard": "^12.0.1",
     "standard-version": "^6.0.1",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "set-value": ">=2.0.1"
   },
   "dependencies": {
     "@lit-any/core": "^0.9.0"
