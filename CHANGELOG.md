@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.11.1](https://github.com/hypermedia-app/lit-any-forms/compare/v0.11.0...v0.11.1) (2019-11-19)
+
+
+### Build System
+
+* **deps:** [security] bump https-proxy-agent from 2.2.2 to 2.2.4 ([268b51a](https://github.com/hypermedia-app/lit-any-forms/commit/268b51a))
+
+
+### Features
+
+* disable shadow DOM with static property ([e97769f](https://github.com/hypermedia-app/lit-any-forms/commit/e97769f))
+
+
+
 ## [0.11.0](https://github.com/hypermedia-app/lit-any-forms/compare/v0.10.1...v0.11.0) (2019-11-05)
 
 
