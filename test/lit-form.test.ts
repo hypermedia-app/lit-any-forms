@@ -703,23 +703,53 @@ describe('lit-form', () => {
     })
   })
 
-  describe('[no-shadow]', () => {
-    it('renders to Light DOM', async () => {
-      // given
-      const contract = {
-        title: 'My first form',
-      }
-      const litForm = await fixture(
-        html`
-          <lit-form .contract="${contract}" no-shadow></lit-form>
-        `,
-      )
+  describe('shadow DOM disabled', () => {
+    describe('with attribute', () => {
+      it('renders to Light DOM', async () => {
+        // given
+        const contract = {
+          title: 'My first form',
+        }
+        const litForm = await fixture(
+          html`
+            <lit-form .contract="${contract}" no-shadow></lit-form>
+          `,
+        )
 
-      // when
-      await litForm.updateComplete
+        // when
+        await litForm.updateComplete
 
-      // then
-      expect(litForm.shadowRoot).to.be.null
+        // then
+        expect(litForm.shadowRoot).to.be.null
+      })
+    })
+
+    describe('with static property', () => {
+      before(() => {
+        LitForm.noShadow = true
+      })
+
+      after(() => {
+        LitForm.noShadow = false
+      })
+
+      it('renders to Light DOM', async () => {
+        // given
+        const contract = {
+          title: 'My first form',
+        }
+        const litForm = await fixture(
+          html`
+            <lit-form .contract="${contract}"></lit-form>
+          `,
+        )
+
+        // when
+        await litForm.updateComplete
+
+        // then
+        expect(litForm.shadowRoot).to.be.null
+      })
     })
   })
 })

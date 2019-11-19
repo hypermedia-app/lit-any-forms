@@ -58,13 +58,15 @@ export default class LitForm extends LitElement {
   @property({ type: String })
   public fieldStyles: CSSResult | null = null
 
+  public static noShadow = false
+
   private __initialValue: Model = {}
 
   @query('form')
   public form: HTMLFormElement | undefined
 
   protected createRenderRoot() {
-    if (this.hasAttribute('no-shadow')) {
+    if (LitForm.noShadow || this.hasAttribute('no-shadow')) {
       return this
     }
 
