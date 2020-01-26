@@ -4,16 +4,17 @@ import { css } from 'lit-element'
 import LitForm from '../src/lit-form'
 import { FormContract } from '../src/lib/formContract'
 
-type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>
-}
-
 describe('lit-form', () => {
   describe('styled', () => {
     it('applies style to fieldset', async () => {
       // given
-      const contract: RecursivePartial<FormContract> = {
-        fields: [{ property: 'name' }],
+      const contract: Partial<FormContract> = {
+        fields: [
+          {
+            type: 'string',
+            property: 'name',
+          },
+        ],
       }
       const fieldsetStyles = css`
         border-top-style: solid;
@@ -42,8 +43,13 @@ describe('lit-form', () => {
 
     it('applies style to field', async () => {
       // given
-      const contract: RecursivePartial<FormContract> = {
-        fields: [{ property: 'name' }],
+      const contract: Partial<FormContract> = {
+        fields: [
+          {
+            type: 'string',
+            property: 'name',
+          },
+        ],
       }
       const fieldStyles = css`
         border-top-style: solid;
@@ -72,8 +78,13 @@ describe('lit-form', () => {
 
     it('applies style to form', async () => {
       // given
-      const contract: RecursivePartial<FormContract> = {
-        fields: [{ property: 'name' }],
+      const contract: Partial<FormContract> = {
+        fields: [
+          {
+            type: 'string',
+            property: 'name',
+          },
+        ],
       }
       const formStyles = css`
         border-top-style: solid;
@@ -101,8 +112,13 @@ describe('lit-form', () => {
     it('throws when form style is not CSSResult', done => {
       ;(async () => {
         // given
-        const contract: RecursivePartial<FormContract> = {
-          fields: [{ property: 'name' }],
+        const contract: Partial<FormContract> = {
+          fields: [
+            {
+              type: 'string',
+              property: 'name',
+            },
+          ],
         }
         const formStyles = 'border: solid 1px red;'
         const litForm = await fixture<LitForm>(
@@ -121,8 +137,13 @@ describe('lit-form', () => {
     it('throws when fieldset style is not CSSResult', done => {
       ;(async () => {
         // given
-        const contract: RecursivePartial<FormContract> = {
-          fields: [{ property: 'name' }],
+        const contract: Partial<FormContract> = {
+          fields: [
+            {
+              type: 'string',
+              property: 'name',
+            },
+          ],
         }
         const fieldsetStyles = 'border: solid 1px red;'
         const litForm = await fixture<LitForm>(
@@ -141,8 +162,13 @@ describe('lit-form', () => {
     it('throws when field style is not CSSResult', done => {
       ;(async () => {
         // given
-        const contract: RecursivePartial<FormContract> = {
-          fields: [{ property: 'name' }],
+        const contract: Partial<FormContract> = {
+          fields: [
+            {
+              type: 'string',
+              property: 'name',
+            },
+          ],
         }
         const fieldStyles = 'border: solid 1px red;'
         const litForm = await fixture<LitForm>(

@@ -1,5 +1,39 @@
 # `lit-form`
 
+## `with nested object`
+
+####   `should render wrapper for every field`
+
+```html
+<form>
+  <div class="fieldset">
+    <div class="fieldset">
+      <div class="fieldset">
+        <div class="field">
+          <label for="undefined">
+            Level 3
+          </label>
+          field
+        </div>
+      </div>
+    </div>
+  </div>
+  <input
+    type="button"
+    value="Submit"
+  >
+  <input
+    type="button"
+    value="Reset"
+  >
+  <input
+    type="button"
+    value="Clear"
+  >
+</form>
+
+```
+
 ## `buttons`
 
 ####   `should not render a submit button when disabled`
@@ -22,7 +56,6 @@
     value="Clear"
   >
 </form>
-
 ```
 
 ####   `should render default buttons`
@@ -49,7 +82,6 @@
     value="Clear"
   >
 </form>
-
 ```
 
 ####   `should allow changing button text`
@@ -76,30 +108,6 @@
     value="Wyczyść"
   >
 </form>
-
-```
-
-####   `should not render a submit button when disabled`
-
-```html
-<form>
-  <div class="fieldset">
-    <div class="field">
-      <label for="field_one">
-        field_one
-      </label>
-    </div>
-  </div>
-  <input
-    type="button"
-    value="Reset"
-  >
-  <input
-    type="button"
-    value="Clear"
-  >
-</form>
-
 ```
 
 ####   `should not render a reset button when disabled`
@@ -122,7 +130,6 @@
     value="Clear"
   >
 </form>
-
 ```
 
 ####   `should not render a clear button when disabled`
@@ -145,6 +152,5 @@
     value="Reset"
   >
 </form>
-
 ```
 
