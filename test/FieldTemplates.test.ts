@@ -1,4 +1,3 @@
-// @ts-ignore
 import { expect } from '@open-wc/testing'
 import { FieldTemplates } from '../src'
 import FieldTemplateSelectorBuilder from '../src/lib/TemplateSelectorBuilder'

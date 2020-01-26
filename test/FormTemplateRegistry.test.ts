@@ -1,4 +1,3 @@
-// @ts-ignore
 import { expect } from '@open-wc/testing'
 import { html, render } from 'lit-html'
 import FormTemplateRegistry from '../src/lib/TemplateRegistry'

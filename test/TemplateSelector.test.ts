@@ -1,4 +1,3 @@
-// @ts-ignore
 import { expect } from '@open-wc/testing'
 import TemplateSelector from '../src/lib/TemplateSelector'
 
@@ -34,10 +33,9 @@ describe('FieldTemplateSelector', () => {
 
     it('returns false if field.property is null', () => {
       // given
-      const criteria = { field: { property: null } }
+      const criteria: any = { field: { property: null } }
 
       // when
-      // @ts-ignore
       const shouldMatch = selector.shouldMatch(criteria)
 
       // then
@@ -46,10 +44,9 @@ describe('FieldTemplateSelector', () => {
 
     it('returns false if field.property is undefined', () => {
       // given
-      const criteria = { field: {} }
+      const criteria: any = { field: {} }
 
       // when
-      // @ts-ignore
       const shouldMatch = selector.shouldMatch(criteria)
 
       // then
