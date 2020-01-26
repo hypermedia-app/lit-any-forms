@@ -23,7 +23,7 @@ const fallbackTextbox = textbox(({ type = 'single line' }) => (f, id, v, set) =>
       type="text"
       ?required="${f.required}"
       @input="${(e: Event & any) => set(e.target.value)}"
-      value="${v || ''}"
+      .value="${v || ''}"
     />
   `
 })
@@ -68,7 +68,7 @@ const fallbackDropdown = dropdown(({ items = [] }) => (f, id, v, set) => {
 const fallbackButton = button(
   ({ label, onClick }) =>
     html`
-      <input type="button" value="${label}" @click="${onClick}" />
+      <input type="button" .value="${label}" @click="${onClick}" />
     `,
 )
 

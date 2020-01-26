@@ -9,12 +9,6 @@ interface Model {
   [key: string]: unknown
 }
 
-function onSubmit(this: LitForm, e: Event) {
-  this.submit()
-  e.preventDefault()
-  return false
-}
-
 export default class LitForm extends LitElement {
   @property({ type: Object, attribute: false })
   public contract: FormContract | null = null
@@ -134,7 +128,7 @@ export default class LitForm extends LitElement {
       <form
         action="${ifDefined(c.target)}"
         method="${ifDefined(c.method)}"
-        @submit="${onSubmit.bind(this)}"
+        @submit="${this.__onSubmit}"
       >
         ${hasAnythingToRender(c) ? this.__fieldsetTemplate(c) : ''}
         ${this.noSubmitButton
@@ -262,6 +256,12 @@ export default class LitForm extends LitElement {
     if (this.formStyles && !(this.formStyles instanceof CSSResult)) {
       throw new Error('Value of formStyles must be a CSSResult')
     }
+  }
+
+  private __onSubmit(e: Event) {
+    this.submit()
+    e.preventDefault()
+    return false
   }
 }
 

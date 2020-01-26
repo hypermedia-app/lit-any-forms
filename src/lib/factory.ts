@@ -2,7 +2,7 @@ import FormTemplateRegistry from './TemplateRegistry'
 
 const fieldTemplates: Map<string, FormTemplateRegistry> = new Map()
 
-export default function createRegistry(name: string = ''): FormTemplateRegistry {
+export default function createRegistry(name = ''): FormTemplateRegistry {
   let registry = fieldTemplates.get(name)
 
   if (!registry) {
