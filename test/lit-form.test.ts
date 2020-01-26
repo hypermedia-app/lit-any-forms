@@ -1,19 +1,14 @@
-// @ts-ignore
-import { expect, fixture as realFixture } from '@open-wc/testing'
-import { html, TemplateResult } from 'lit-html'
+import { expect, fixture } from '@open-wc/testing'
+import { html } from 'lit-html'
 import * as sinon from 'sinon'
 import { FieldTemplates } from '../src'
 import { forSubmit } from './async-tests'
 import LitForm from '../src/lit-form'
 
-function fixture(template: TemplateResult) {
-  return realFixture(template) as LitForm
-}
-
 describe('lit-form', () => {
   let getTemplate: sinon.SinonStub
   const template: {
-    render?: sinon.SinonSpy
+    render?: sinon.SinonStub
   } = {}
 
   const { byName } = FieldTemplates
@@ -33,12 +28,12 @@ describe('lit-form', () => {
     beforeEach(async () => {
       getTemplate = sinon.stub()
       getTemplate.returns(template)
-      template.render = sinon.spy()
+      template.render = sinon.stub()
     })
 
     it('should render empty form for empty contract', async () => {
       // given
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${{}}"></lit-form>
         `,
@@ -56,7 +51,7 @@ describe('lit-form', () => {
       const contract = {
         title: 'My first form',
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -74,7 +69,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{}, {}, {}, {}],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -92,7 +87,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{}, {}, {}, {}],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -110,7 +105,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'field_one' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -128,7 +123,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'field_one', title: 'some important input' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -146,7 +141,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'field_one' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -164,7 +159,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'field_one' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -190,7 +185,7 @@ describe('lit-form', () => {
       const value = {
         prop: '10',
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}" .value="${value}"></lit-form>
         `,
@@ -213,7 +208,7 @@ describe('lit-form', () => {
           },
         ],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}" .value="${{}}"></lit-form>
         `,
@@ -229,11 +224,12 @@ describe('lit-form', () => {
 
     it('should pass a change setter which sets value', async () => {
       // given
-      // @ts-ignore
-      template.render = (f, id, v, setter) =>
-        html`
-          <input type="text" @input="${(e: any) => setter(e.target.value)}" />
-        `
+      template.render!.callsFake(
+        (f, id, v, setter) =>
+          html`
+            <input type="text" @input="${(e: any) => setter(e.target.value)}" />
+          `,
+      )
       const contract = {
         fields: [
           {
@@ -241,7 +237,7 @@ describe('lit-form', () => {
           },
         ],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -266,7 +262,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{}],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -284,7 +280,7 @@ describe('lit-form', () => {
       const contract = {
         target: 'http://exmple.com/resource',
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -302,7 +298,7 @@ describe('lit-form', () => {
       const contract = {
         method: 'POST',
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -321,7 +317,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [field],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -344,7 +340,7 @@ describe('lit-form', () => {
         foo: bar,
       }
       bar.value = value
-      const litForm = await realFixture(
+      const litForm = await fixture<any>(
         html`
           <lit-form .contract="${{}}" .value="${value}"></lit-form>
         `,
@@ -364,7 +360,7 @@ describe('lit-form', () => {
         const contract = {
           fields: [{}],
         }
-        const litForm = await fixture(
+        const litForm = await fixture<LitForm>(
           html`
             <lit-form .contract="${contract}"></lit-form>
           `,
@@ -390,7 +386,7 @@ describe('lit-form', () => {
         const value = {
           test: 'qwerty',
         }
-        const litForm = await fixture(
+        const litForm = await fixture<LitForm>(
           html`
             <lit-form .contract="${contract}" .value="${value}"></lit-form>
           `,
@@ -410,7 +406,7 @@ describe('lit-form', () => {
     beforeEach(async () => {
       getTemplate = sinon.stub()
       getTemplate.returns(template)
-      template.render = sinon.spy()
+      template.render = sinon.stub()
     })
 
     it('should not render a label', async () => {
@@ -418,7 +414,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'field_one' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form no-labels .contract="${contract}"></lit-form>
         `,
@@ -436,7 +432,7 @@ describe('lit-form', () => {
     beforeEach(async () => {
       getTemplate = sinon.stub()
       getTemplate.returns(template)
-      template.render = sinon.spy()
+      template.render = sinon.stub()
     })
 
     it('should not render the <legend> element', async () => {
@@ -445,7 +441,7 @@ describe('lit-form', () => {
         title: 'should not appear',
         fields: [{ property: 'field_one' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form no-legend .contract="${contract}"></lit-form>
         `,
@@ -463,7 +459,7 @@ describe('lit-form', () => {
     beforeEach(async () => {
       getTemplate = sinon.stub()
       getTemplate.returns(template)
-      template.render = sinon.spy()
+      template.render = sinon.stub()
     })
 
     it('should not render a submit button when disabled', async () => {
@@ -471,7 +467,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'field_one' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form no-submit-button .contract="${contract}"></lit-form>
         `,
@@ -489,7 +485,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'field_one' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -507,7 +503,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'field_one' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form
             submit-button-label="Wyślij"
@@ -530,7 +526,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'field_one' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form no-reset-button .contract="${contract}"></lit-form>
         `,
@@ -548,7 +544,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'field_one' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form no-clear-button .contract="${contract}"></lit-form>
         `,
@@ -573,7 +569,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [{ property: 'name' }, { property: 'age' }, { property: 'nick' }],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -606,7 +602,7 @@ describe('lit-form', () => {
         method: 'PATCH',
         fields: [],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -629,7 +625,7 @@ describe('lit-form', () => {
       const contract = {
         fields: [],
       }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}"></lit-form>
         `,
@@ -659,7 +655,7 @@ describe('lit-form', () => {
         fields: [{ property: 'name' }],
       }
       const value = { name: 'a' }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}" .value="${value}"></lit-form>
         `,
@@ -687,7 +683,7 @@ describe('lit-form', () => {
         fields: [{ property: 'name' }],
       }
       const value = { name: 'a' }
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         html`
           <lit-form .contract="${contract}" .value="${value}"></lit-form>
         `,
@@ -710,7 +706,7 @@ describe('lit-form', () => {
         const contract = {
           title: 'My first form',
         }
-        const litForm = await fixture(
+        const litForm = await fixture<LitForm>(
           html`
             <lit-form .contract="${contract}" no-shadow></lit-form>
           `,
@@ -738,7 +734,7 @@ describe('lit-form', () => {
         const contract = {
           title: 'My first form',
         }
-        const litForm = await fixture(
+        const litForm = await fixture<LitForm>(
           html`
             <lit-form .contract="${contract}"></lit-form>
           `,

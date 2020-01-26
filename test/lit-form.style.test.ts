@@ -1,13 +1,18 @@
-// @ts-ignore
 import { expect, fixture } from '@open-wc/testing'
 import { html } from 'lit-html'
 import { css } from 'lit-element'
+import LitForm from '../src/lit-form'
+import { FormContract } from '../src/lib/formContract'
+
+type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>
+}
 
 describe('lit-form', () => {
   describe('styled', () => {
     it('applies style to fieldset', async () => {
       // given
-      const contract = {
+      const contract: RecursivePartial<FormContract> = {
         fields: [{ property: 'name' }],
       }
       const fieldsetStyles = css`
@@ -15,14 +20,14 @@ describe('lit-form', () => {
         border-top-width: 1px;
         border-top-color: red;
       `
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         `
           <lit-form></lit-form>
         `,
       )
 
       // when
-      litForm.contract = contract
+      litForm.contract = contract as any
       litForm.fieldsetStyles = fieldsetStyles
 
       // when
@@ -37,7 +42,7 @@ describe('lit-form', () => {
 
     it('applies style to field', async () => {
       // given
-      const contract = {
+      const contract: RecursivePartial<FormContract> = {
         fields: [{ property: 'name' }],
       }
       const fieldStyles = css`
@@ -45,14 +50,14 @@ describe('lit-form', () => {
         border-top-width: 1px;
         border-top-color: red;
       `
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         `
           <lit-form></lit-form>
         `,
       )
 
       // when
-      litForm.contract = contract
+      litForm.contract = contract as any
       litForm.fieldStyles = fieldStyles
 
       // when
@@ -67,7 +72,7 @@ describe('lit-form', () => {
 
     it('applies style to form', async () => {
       // given
-      const contract = {
+      const contract: RecursivePartial<FormContract> = {
         fields: [{ property: 'name' }],
       }
       const formStyles = css`
@@ -75,14 +80,14 @@ describe('lit-form', () => {
         border-top-width: 1px;
         border-top-color: red;
       `
-      const litForm = await fixture(
+      const litForm = await fixture<LitForm>(
         `
           <lit-form></lit-form>
         `,
       )
 
       // when
-      litForm.contract = contract
+      litForm.contract = contract as any
       litForm.formStyles = formStyles
       await litForm.updateComplete
 
@@ -96,11 +101,11 @@ describe('lit-form', () => {
     it('throws when form style is not CSSResult', done => {
       ;(async () => {
         // given
-        const contract = {
+        const contract: RecursivePartial<FormContract> = {
           fields: [{ property: 'name' }],
         }
         const formStyles = 'border: solid 1px red;'
-        const litForm = await fixture(
+        const litForm = await fixture<LitForm>(
           html`
             <lit-form .contract="${contract}" .formStyles="${formStyles}"></lit-form>
           `,
@@ -116,11 +121,11 @@ describe('lit-form', () => {
     it('throws when fieldset style is not CSSResult', done => {
       ;(async () => {
         // given
-        const contract = {
+        const contract: RecursivePartial<FormContract> = {
           fields: [{ property: 'name' }],
         }
         const fieldsetStyles = 'border: solid 1px red;'
-        const litForm = await fixture(
+        const litForm = await fixture<LitForm>(
           html`
             <lit-form .contract="${contract}" .fieldsetStyles="${fieldsetStyles}"></lit-form>
           `,
@@ -136,11 +141,11 @@ describe('lit-form', () => {
     it('throws when field style is not CSSResult', done => {
       ;(async () => {
         // given
-        const contract = {
+        const contract: RecursivePartial<FormContract> = {
           fields: [{ property: 'name' }],
         }
         const fieldStyles = 'border: solid 1px red;'
-        const litForm = await fixture(
+        const litForm = await fixture<LitForm>(
           html`
             <lit-form .contract="${contract}" .fieldStyles="${fieldStyles}"></lit-form>
           `,

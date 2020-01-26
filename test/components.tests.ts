@@ -1,4 +1,3 @@
-// @ts-ignore
 import { expect } from '@open-wc/testing'
 import { textbox } from '../src/components'
 
