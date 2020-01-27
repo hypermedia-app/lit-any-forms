@@ -1,9 +1,15 @@
-import { css, CSSResult, LitElement, property, query } from 'lit-element'
+import { css, CSSResult, LitElement, property, query, TemplateResult } from 'lit-element'
 import { html } from 'lit-html'
 import { ifDefined } from 'lit-html/directives/if-defined'
 import { hasAnythingToRender } from './lib/contract-helpers'
 import FieldTemplates from './lib'
-import { FormContract, FieldContract } from './lib/formContract'
+import {
+  FormContract,
+  SimpleField,
+  NestedField,
+  ObjectDescription,
+  FieldContract,
+} from './lib/formContract'
 
 interface Model {
   [key: string]: unknown
@@ -159,7 +165,7 @@ export default class LitForm extends LitElement {
     })
   }
 
-  protected __fieldsetTemplate(c: FormContract) {
+  protected __fieldsetTemplate(c: ObjectDescription): TemplateResult {
     return html`
       <div class="fieldset">
         ${this.__fieldsetHeading(c)} ${(c.fields || []).map(f => this.__fieldWrapperTemplate(f))}
@@ -167,7 +173,22 @@ export default class LitForm extends LitElement {
     `
   }
 
-  protected __fieldWrapperTemplate(field: FieldContract) {
+  protected __fieldWrapperTemplate(field: SimpleField | NestedField) {
+    if (typeof field.type === 'object') {
+      return this.__fieldsetTemplate(field.type)
+    }
+
+    if (!field.type) {
+      this.__simpleFieldWrapperTemplate({
+        ...field,
+        type: 'string',
+      })
+    }
+
+    return this.__simpleFieldWrapperTemplate(field as SimpleField)
+  }
+
+  protected __simpleFieldWrapperTemplate(field: SimpleField) {
     const fieldId = field.property
 
     let fieldLabel = html``
@@ -184,7 +205,7 @@ export default class LitForm extends LitElement {
     `
   }
 
-  protected __fieldTemplate(field: FieldContract, fieldId: string) {
+  protected __fieldTemplate(field: SimpleField, fieldId: string) {
     const setter = this.__createModelValueSetter(field)
 
     const fieldTemplate = FieldTemplates.byName(this.templateRegistry).getTemplate({ field })
@@ -208,7 +229,7 @@ export default class LitForm extends LitElement {
     `
   }
 
-  protected __createModelValueSetter(field: FieldContract) {
+  protected __createModelValueSetter(field: SimpleField) {
     return (fieldInput: unknown) => {
       let newValue = fieldInput
 
@@ -234,7 +255,7 @@ export default class LitForm extends LitElement {
     return value
   }
 
-  protected __fieldsetHeading(currentContract: FormContract) {
+  protected __fieldsetHeading(currentContract: ObjectDescription) {
     if (!currentContract.title || this.noLegend) {
       return html``
     }

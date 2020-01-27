@@ -4,6 +4,11 @@ import * as sinon from 'sinon'
 import { FieldTemplates } from '../src'
 import { forSubmit } from './async-tests'
 import LitForm from '../src/lit-form'
+import { FormContract } from '../src/lib/formContract'
+
+type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>
+}
 
 describe('lit-form', () => {
   let getTemplate: sinon.SinonStub
@@ -48,7 +53,7 @@ describe('lit-form', () => {
 
     it('should render legend for contract title', async () => {
       // given
-      const contract = {
+      const contract: Partial<FormContract> = {
         title: 'My first form',
       }
       const litForm = await fixture<LitForm>(
@@ -66,8 +71,13 @@ describe('lit-form', () => {
 
     it('should render wrapper for every field', async () => {
       // given
-      const contract = {
-        fields: [{}, {}, {}, {}],
+      const contract: Partial<FormContract> = {
+        fields: [
+          { type: 'string', property: 'p1' },
+          { type: 'string', property: 'p2' },
+          { type: 'string', property: 'p3' },
+          { type: 'string', property: 'p4' },
+        ],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -84,8 +94,13 @@ describe('lit-form', () => {
 
     it('should render every field', async () => {
       // given
-      const contract = {
-        fields: [{}, {}, {}, {}],
+      const contract: Partial<FormContract> = {
+        fields: [
+          { type: 'string', property: 'p1' },
+          { type: 'string', property: 'p2' },
+          { type: 'string', property: 'p3' },
+          { type: 'string', property: 'p4' },
+        ],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -102,8 +117,8 @@ describe('lit-form', () => {
 
     it("should render label and assign input's id", async () => {
       // given
-      const contract = {
-        fields: [{ property: 'field_one' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'field_one' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -120,8 +135,8 @@ describe('lit-form', () => {
 
     it("should set label's text to title", async () => {
       // given
-      const contract = {
-        fields: [{ property: 'field_one', title: 'some important input' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'field_one', title: 'some important input' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -138,8 +153,8 @@ describe('lit-form', () => {
 
     it("should set label's text to property name is title is not given", async () => {
       // given
-      const contract = {
-        fields: [{ property: 'field_one' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'field_one' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -156,8 +171,8 @@ describe('lit-form', () => {
 
     it('should pass field id to render call', async () => {
       // given
-      const contract = {
-        fields: [{ property: 'field_one' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'field_one' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -175,9 +190,10 @@ describe('lit-form', () => {
 
     it('should pass pre-existing value when rendering field', async () => {
       // given
-      const contract = {
+      const contract: Partial<FormContract> = {
         fields: [
           {
+            type: 'string',
             property: 'prop',
           },
         ],
@@ -201,9 +217,10 @@ describe('lit-form', () => {
 
     it('should pass null if pre-existing value is undefined when rendering field', async () => {
       // given
-      const contract = {
+      const contract: Partial<FormContract> = {
         fields: [
           {
+            type: 'string',
             property: 'prop',
           },
         ],
@@ -230,9 +247,10 @@ describe('lit-form', () => {
             <input type="text" @input="${(e: any) => setter(e.target.value)}" />
           `,
       )
-      const contract = {
+      const contract: Partial<FormContract> = {
         fields: [
           {
+            type: 'string',
             property: 'test',
           },
         ],
@@ -259,8 +277,8 @@ describe('lit-form', () => {
 
     it('should not render legend when title is empty', async () => {
       // given
-      const contract = {
-        fields: [{}],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'prop' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -277,7 +295,7 @@ describe('lit-form', () => {
 
     it("should set form[action] to contract's target", async () => {
       // given
-      const contract = {
+      const contract: Partial<FormContract> = {
         target: 'http://exmple.com/resource',
       }
       const litForm = await fixture<LitForm>(
@@ -295,7 +313,7 @@ describe('lit-form', () => {
 
     it("should set form[method] to contract's method", async () => {
       // given
-      const contract = {
+      const contract: Partial<FormContract> = {
         method: 'POST',
       }
       const litForm = await fixture<LitForm>(
@@ -313,8 +331,8 @@ describe('lit-form', () => {
 
     it('should pass field to FieldTemplates.getTemplate', async () => {
       // given
-      const field = {}
-      const contract = {
+      const field = { type: 'string', property: 'prop' }
+      const contract: Partial<FormContract> = {
         fields: [field],
       }
       const litForm = await fixture<LitForm>(
@@ -357,8 +375,8 @@ describe('lit-form', () => {
       it('should return a plain input', async () => {
         // given
         getTemplate.returns(null)
-        const contract = {
-          fields: [{}],
+        const contract: Partial<FormContract> = {
+          fields: [{ type: 'string', property: 'prop' }],
         }
         const litForm = await fixture<LitForm>(
           html`
@@ -376,9 +394,10 @@ describe('lit-form', () => {
       it('should set fallback input value', async () => {
         // given
         getTemplate.returns(null)
-        const contract = {
+        const contract: Partial<FormContract> = {
           fields: [
             {
+              type: 'string',
               property: 'test',
             },
           ],
@@ -402,6 +421,96 @@ describe('lit-form', () => {
     })
   })
 
+  describe('with nested object', () => {
+    beforeEach(async () => {
+      getTemplate = sinon.stub()
+      getTemplate.returns(template)
+      template.render = sinon.stub().callsFake(
+        () =>
+          html`
+            field
+          `,
+      )
+    })
+
+    it('should render wrapper for every field', async () => {
+      // given
+      const contract: RecursivePartial<FormContract> = {
+        fields: [
+          {
+            type: {
+              fields: [
+                {
+                  type: {
+                    fields: [
+                      {
+                        type: 'number',
+                        title: 'Level 3',
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      }
+      const litForm = await fixture<LitForm>(
+        html`
+          <lit-form .contract="${contract}"></lit-form>
+        `,
+      )
+
+      // when
+      await litForm.updateComplete
+
+      // then
+      expect(litForm.form).to.equalSnapshot()
+    })
+
+    it('should render every field', async () => {
+      // given
+      const contract: Partial<FormContract> = {
+        fields: [
+          {
+            title: 'parent',
+            property: 'l1',
+            type: {
+              title: 'l1 child',
+              fields: [
+                {
+                  title: 'l2 child',
+                  property: 'l2',
+                  type: {
+                    title: 'l3',
+                    fields: [
+                      {
+                        property: 'l3',
+                        type: 'number',
+                        title: 'Level 3',
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      }
+      const litForm = await fixture<LitForm>(
+        html`
+          <lit-form .contract="${contract}"></lit-form>
+        `,
+      )
+
+      // when
+      await litForm.updateComplete
+
+      // then
+      expect(getTemplate.getCalls().length).to.equal(1)
+    })
+  })
+
   describe('when no-labels is set', () => {
     beforeEach(async () => {
       getTemplate = sinon.stub()
@@ -411,8 +520,8 @@ describe('lit-form', () => {
 
     it('should not render a label', async () => {
       // given
-      const contract = {
-        fields: [{ property: 'field_one' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'field_one' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -437,9 +546,9 @@ describe('lit-form', () => {
 
     it('should not render the <legend> element', async () => {
       // given
-      const contract = {
+      const contract: Partial<FormContract> = {
         title: 'should not appear',
-        fields: [{ property: 'field_one' }],
+        fields: [{ type: 'string', property: 'field_one' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -464,8 +573,8 @@ describe('lit-form', () => {
 
     it('should not render a submit button when disabled', async () => {
       // given
-      const contract = {
-        fields: [{ property: 'field_one' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'field_one' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -482,8 +591,8 @@ describe('lit-form', () => {
 
     it('should render default buttons', async () => {
       // given
-      const contract = {
-        fields: [{ property: 'field_one' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'field_one' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -500,8 +609,8 @@ describe('lit-form', () => {
 
     it('should allow changing button text', async () => {
       // given
-      const contract = {
-        fields: [{ property: 'field_one' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'field_one' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -523,8 +632,8 @@ describe('lit-form', () => {
 
     it('should not render a reset button when disabled', async () => {
       // given
-      const contract = {
-        fields: [{ property: 'field_one' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'field_one' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -541,8 +650,8 @@ describe('lit-form', () => {
 
     it('should not render a clear button when disabled', async () => {
       // given
-      const contract = {
-        fields: [{ property: 'field_one' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'field_one' }],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -566,8 +675,12 @@ describe('lit-form', () => {
 
     it('triggers when form is submitted', async () => {
       // given
-      const contract = {
-        fields: [{ property: 'name' }, { property: 'age' }, { property: 'nick' }],
+      const contract: Partial<FormContract> = {
+        fields: [
+          { type: 'string', property: 'name' },
+          { type: 'number', property: 'age' },
+          { type: 'string', property: 'nick' },
+        ],
       }
       const litForm = await fixture<LitForm>(
         html`
@@ -597,7 +710,7 @@ describe('lit-form', () => {
 
     it("details contain form's action and method", async () => {
       // given
-      const contract = {
+      const contract: Partial<FormContract> = {
         target: 'http://example.com/',
         method: 'PATCH',
         fields: [],
@@ -622,7 +735,7 @@ describe('lit-form', () => {
 
     it("details fires with 'GET' method if unspecified in contract", async () => {
       // given
-      const contract = {
+      const contract: Partial<FormContract> = {
         fields: [],
       }
       const litForm = await fixture<LitForm>(
@@ -651,8 +764,8 @@ describe('lit-form', () => {
 
     it('sets an empty object as value', async () => {
       // given
-      const contract = {
-        fields: [{ property: 'name' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'name' }],
       }
       const value = { name: 'a' }
       const litForm = await fixture<LitForm>(
@@ -679,8 +792,8 @@ describe('lit-form', () => {
 
     it('reverts the initially set value', async () => {
       // given
-      const contract = {
-        fields: [{ property: 'name' }],
+      const contract: Partial<FormContract> = {
+        fields: [{ type: 'string', property: 'name' }],
       }
       const value = { name: 'a' }
       const litForm = await fixture<LitForm>(
@@ -703,7 +816,7 @@ describe('lit-form', () => {
     describe('with attribute', () => {
       it('renders to Light DOM', async () => {
         // given
-        const contract = {
+        const contract: Partial<FormContract> = {
           title: 'My first form',
         }
         const litForm = await fixture<LitForm>(
@@ -731,7 +844,7 @@ describe('lit-form', () => {
 
       it('renders to Light DOM', async () => {
         // given
-        const contract = {
+        const contract: Partial<FormContract> = {
           title: 'My first form',
         }
         const litForm = await fixture<LitForm>(
