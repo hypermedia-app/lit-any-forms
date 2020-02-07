@@ -168,19 +168,20 @@ export default class LitForm extends LitElement {
   }
 
   protected __fieldWrapperTemplate(field: FieldContract) {
-    const fieldId = field.property
+    return html`
+      <div class="field">
+        ${this.__labelTemplate(field)} ${this.__fieldTemplate(field, field.property)}
+      </div>
+    `
+  }
 
-    let fieldLabel = html``
-    if (this.noLabels === false) {
-      fieldLabel = html`
-        <label for="${fieldId}">${field.title || field.property}</label>
-      `
+  protected __labelTemplate(field: FieldContract) {
+    if (this.noLabels) {
+      return html``
     }
 
     return html`
-      <div class="field">
-        ${fieldLabel} ${this.__fieldTemplate(field, fieldId)}
-      </div>
+      <label for="${field.property}">${field.title || field.property}</label>
     `
   }
 
