@@ -14,6 +14,7 @@ module.exports = config => {
 
   config.concurrency = 1
   config.browsers.splice(config.browsers.indexOf('bs_win10_ie_11'), 1)
+  config.browsers.splice(config.browsers.indexOf('bs_win10_edge_latest'), 1)
 
   return config
 }
