@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.12.0](https://github.com/hypermedia-app/lit-any-forms/compare/v0.11.1...v0.12.0) (2020-02-08)
+
+
+### Build System
+
+* **deps:** [security] bump handlebars from 4.1.2 to 4.6.0 ([e3d27d2](https://github.com/hypermedia-app/lit-any-forms/commit/e3d27d2))
+* **deps:** update open-wc and other build libs ([795b0bd](https://github.com/hypermedia-app/lit-any-forms/commit/795b0bd))
+
+
+### Features
+
+* extract label template so that is can be overridden ([3d0693b](https://github.com/hypermedia-app/lit-any-forms/commit/3d0693b))
+
+
+
 ### [0.11.1](https://github.com/hypermedia-app/lit-any-forms/compare/v0.11.0...v0.11.1) (2019-11-19)
 
 
