@@ -23,3 +23,4 @@ deploy:
     tags: true
     repo: hypermedia-app/lit-any-forms
   skip_cleanup: true
+  edge: true
