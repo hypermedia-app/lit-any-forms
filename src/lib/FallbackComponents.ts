@@ -81,7 +81,6 @@ const fallbackCheckbox = checkbox(() => (f, id, v, set) => html`
     @change="${(e: any) => set(e.target.checked)}"
     ?checked="${ifDefined(v)}"
   />
-  <label for="${id}">${f.title}</label>
 `)
 
 export default {

@@ -1,7 +1,13 @@
 import { RenderFunc } from '../index'
 
-export function builderFactory<TOptions>() {
-  return function builder<T extends TOptions>(fn: (o: T) => RenderFunc) {
+export function builderWithOptions<TOptions>() {
+  return function builder<T extends TOptions>(fn: (o: TOptions) => RenderFunc) {
+    return fn
+  }
+}
+
+export function builderWithoutOptions() {
+  return function builder(fn: () => RenderFunc) {
     return fn
   }
 }

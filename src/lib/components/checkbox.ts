@@ -1,3 +1,3 @@
-import { builderFactory } from './builder'
+import { builderWithoutOptions } from './builder'
 
-export default builderFactory()
+export default builderWithoutOptions()
