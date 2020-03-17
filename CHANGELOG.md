@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.3](https://github.com/hypermedia-app/lit-any-forms/compare/v0.12.2...v0.12.3) (2020-03-17)
+
+
+### Bug Fixes
+
+* fallback checkbox does not satisfy typings ([c633b8f](https://github.com/hypermedia-app/lit-any-forms/commit/c633b8f81bfcb48c6e9c02c842e199d9be54708f))
+
 ### [0.12.2](https://github.com/hypermedia-app/lit-any-forms/compare/v0.12.1...v0.12.2) (2020-03-17)
 
 
