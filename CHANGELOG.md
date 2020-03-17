@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.2](https://github.com/hypermedia-app/lit-any-forms/compare/v0.12.1...v0.12.2) (2020-03-17)
+
+
+### Features
+
+* **components:** added checkbox ([cb6e9a8](https://github.com/hypermedia-app/lit-any-forms/commit/cb6e9a83cf08374d5b94e0783f0e2ec52ca9ea4b))
+
 ### [0.12.1](https://github.com/hypermedia-app/lit-any-forms/compare/v0.12.0...v0.12.1) (2020-02-08)
 
 
