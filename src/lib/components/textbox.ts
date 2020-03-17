@@ -1,9 +1,7 @@
-import { RenderFunc } from '../index'
+import { builderFactory } from './builder'
 
 export interface TextboxOptions {
   type: 'single line' | 'multi line'
 }
 
-export default function builder<TOptions extends TextboxOptions>(fn: (o: TOptions) => RenderFunc) {
-  return fn
-}
+export default builderFactory<TextboxOptions>()

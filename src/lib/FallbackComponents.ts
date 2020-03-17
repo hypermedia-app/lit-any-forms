@@ -1,9 +1,11 @@
 import { html } from 'lit-html'
 import { repeat } from 'lit-html/directives/repeat'
 import { until } from 'lit-html/directives/until'
+import { ifDefined } from 'lit-html/directives/if-defined'
 import button from './components/button'
 import textbox from './components/textbox'
 import dropdown, { DropdownItem } from './components/dropdown'
+import checkbox from './components/checkbox'
 
 const fallbackTextbox = textbox(({ type = 'single line' }) => (f, id, v, set) => {
   if (type === 'multi line') {
@@ -72,8 +74,19 @@ const fallbackButton = button(
     `,
 )
 
+const fallbackCheckbox = checkbox(() => (f, id, v, set) => html`
+  <input
+    type="checkbox"
+    id="${id}"
+    @change="${(e: any) => set(e.target.checked)}"
+    ?checked="${ifDefined(v)}"
+  />
+  <label for="${id}">${f.title}</label>
+`)
+
 export default {
   textbox: fallbackTextbox,
   dropdown: fallbackDropdown,
   button: fallbackButton,
+  checkbox: fallbackCheckbox,
 }
