@@ -1,4 +1,4 @@
-import { RenderFunc } from '../index'
+import { builderFactory } from './builder'
 import { FieldContract } from '../formContract'
 
 export interface DropdownItem {
@@ -10,6 +10,4 @@ export interface DropdownOptions {
   items: DropdownItems | ((field: FieldContract) => DropdownItems)
 }
 
-export default function builder<T extends DropdownOptions>(fn: (o: T) => RenderFunc) {
-  return fn
-}
+export default builderFactory<DropdownOptions>()
