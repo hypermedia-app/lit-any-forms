@@ -1,4 +1,4 @@
-import { builderFactory } from './builder'
+import { builderWithOptions } from './builder'
 import { FieldContract } from '../formContract'
 
 export interface DropdownItem {
@@ -10,4 +10,4 @@ export interface DropdownOptions {
   items: DropdownItems | ((field: FieldContract) => DropdownItems)
 }
 
-export default builderFactory<DropdownOptions>()
+export default builderWithOptions<DropdownOptions>()
