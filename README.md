@@ -1,3 +1,8 @@
+DEPRECATED in favour of [@hydrofoil/shaperone](https://github.com/hypermedia-app/shaperone)
+
+
+----
+
 # `@lit-any/forms` [![codecov](https://codecov.io/gh/hypermedia-app/lit-any-forms/branch/master/graph/badge.svg)](https://codecov.io/gh/wikibus/lit-any)
 
 Construct HTML forms from lightweight snippets for each field using `lit-html`
